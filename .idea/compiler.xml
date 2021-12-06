@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ws2021_team_1_service_7_persons" />
+        <module name="WS2021_Team_1_Service_7_Persons" />
       </profile>
     </annotationProcessing>
   </component>
