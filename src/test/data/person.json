@@ -7,16 +7,32 @@
     "fax": "675-759-3583",
     "positions": ["Nurse Practicioner"],
     "email": "bhaggerwood0@eventbrite.com",
-    "salutation": "Frau"
+    "salutation": "Frau",
+    "room": null,
+    "faculty": null
   },
   {
-  "phone": "421-591-9749",
-  "titles": ["Rev"],
-  "firstname": "Wandie",
-  "lastname": "Dorgan",
-  "fax": "440-383-4268",
-  "positions": ["Accountant II"],
-  "email": "wdorgan1@cbsnews.com",
-  "salutation": "Herr"
+    "phone": "421-591-9749",
+    "titles": ["Rev"],
+    "firstname": "Wandie",
+    "lastname": "Dorgan",
+    "fax": "440-383-4268",
+    "positions": ["Accountant II"],
+    "email": "wdorgan1@cbsnews.com",
+    "salutation": "Frau",
+    "room": null,
+    "faculty": null
+  },
+  {
+    "phone": "702-130-9023",
+    "titles": ["Ms"],
+    "firstname": "Alexander",
+    "lastname": "Dorgan",
+    "fax": "133-178-7264",
+    "positions": ["Design Engineer"],
+    "email": "alockwood3@addthis.com",
+    "salutation": "Herr",
+    "room": null,
+    "faculty": null
   }
 ]
