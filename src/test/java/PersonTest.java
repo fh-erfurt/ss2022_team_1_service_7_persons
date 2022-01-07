@@ -20,7 +20,7 @@ class PersonTest {
     }
 
     @Test
-    void itShouldCreateFromValues() {
+    void itShouldCreatePerson() {
         Person person = new Person("802-621-3928", new String[] {"Ms", "Dr."}, "Bail", "Haggerwood", "675-759-3583", new String[] {"Nurse Practicioner"}, "bhaggerwood0@eventbrite.com", null, null, Salutation.Frau);
         assertEquals("802-621-3928", person.getPhone());
         assertArrayEquals(new String[] {"Ms", "Dr."}, person.getTitles());
