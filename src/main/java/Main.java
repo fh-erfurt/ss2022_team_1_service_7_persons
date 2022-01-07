@@ -6,7 +6,8 @@ public class Main {
         for (Position currentEnum : myEnum) {
             System.out.println(currentEnum);
         }
-
+*/
+    public static void main(String[] args) {
         System.out.println("Hello World");
-    }*/
+    }
 }
