@@ -1,0 +1,22 @@
+[
+  {
+    "phone": "802-621-3928",
+    "titles": ["Ms", "Dr."],
+    "firstname": "Bail",
+    "lastname": "Haggerwood",
+    "fax": "675-759-3583",
+    "positions": ["Nurse Practicioner"],
+    "email": "bhaggerwood0@eventbrite.com",
+    "salutation": "Frau"
+  },
+  {
+  "phone": "421-591-9749",
+  "titles": ["Rev"],
+  "firstname": "Wandie",
+  "lastname": "Dorgan",
+  "fax": "440-383-4268",
+  "positions": ["Accountant II"],
+  "email": "wdorgan1@cbsnews.com",
+  "salutation": "Herr"
+  }
+]

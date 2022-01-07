@@ -1,6 +1,6 @@
 
 public class Main {
-    private static Position[] myEnum = { Position.Dozent, Position.Dekan };
+    /*private static Position[] myEnum = { Position.Dozent, Position.Dekan };
 
     public static void main(String[] args) {
         for (Position currentEnum : myEnum) {
@@ -8,5 +8,5 @@ public class Main {
         }
 
         System.out.println("Hello World");
-    }
+    }*/
 }
