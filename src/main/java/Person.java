@@ -28,13 +28,14 @@ public class Person implements Comparable<Person> {
     }
 
     public Person(String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, Faculty faculty, Room room, Salutation salutation) {
-        this.phone = phone;
+        this.phone = ""; this.fax = ""; this.email = "";
+        setPhone(phone);
+        setFax(fax);
+        setEmail(email);
         this.titles = new ArrayList<>(Arrays.asList(titles));
         this.firstname = firstname;
         this.lastname = lastname;
-        this.fax = fax;
         this.positions = new ArrayList<>(Arrays.asList(positions));
-        this.email = email;
         this.faculty = null;
         this.room = null;
         this.salutation = salutation;
@@ -71,7 +72,10 @@ public class Person implements Comparable<Person> {
     }
 
     public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        if (!Utils.checkPhone(phone)) return;
+        this.phone = phone;
+    }
 
     public String[] getTitles() { return titles.toArray(new String[0]); }
     public void setTitles(String[] titles) { this.titles = new ArrayList<>(Arrays.asList(titles)); }
@@ -86,14 +90,20 @@ public class Person implements Comparable<Person> {
     public String getName() { return this.firstname + " " + this.lastname; }
 
     public String getFax() { return fax; }
-    public void setFax(String fax) { this.fax = fax; }
+    public void setFax(String fax) {
+        if (!Utils.checkFax(fax)) return;
+        this.fax = fax;
+    }
 
     public String[] getPositions() { return positions.toArray(new String[0]); }
     public void setPositions(String[] positions) { this.positions = new ArrayList<>(Arrays.asList(positions)); }
     public void addPosition(String newPosition) { positions.add(newPosition); }
 
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        if (!Utils.checkEmail(email)) return;
+        this.email = email;
+    }
 
     public Faculty getFaculty() { return faculty; }
     public void setFaculty(Faculty faculty) { this.faculty = faculty; }
