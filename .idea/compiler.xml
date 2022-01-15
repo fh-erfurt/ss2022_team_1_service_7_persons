@@ -11,7 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="WS2021_Team_1_Service_7_Persons" target="17" />
-      <module name="ws2021_team_1_service_7_persons" target="17" />
+      <module name="ws2021_team_1_service_7_persons" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
