@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class Person implements Comparable<Person> {
+    private int id;
     private String phone;
     private ArrayList<String> titles;
     private String firstname;
@@ -15,6 +16,7 @@ public class Person implements Comparable<Person> {
     private Salutation salutation;
 
     public Person() {
+        id = 0;
         titles = new ArrayList<>();
         positions = new ArrayList<>();
         phone = "";
@@ -80,6 +82,9 @@ public class Person implements Comparable<Person> {
     public String[] getTitles() { return titles.toArray(new String[0]); }
     public void setTitles(String[] titles) { this.titles = new ArrayList<>(Arrays.asList(titles)); }
     public void addTitle(String newTitle) { titles.add(newTitle); }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getFirstname() { return firstname; }
     public void setFirstname(String firstname) { this.firstname = firstname; }
