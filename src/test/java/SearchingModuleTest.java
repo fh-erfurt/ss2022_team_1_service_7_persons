@@ -40,4 +40,16 @@ public class SearchingModuleTest {
         assertArrayEquals(found, new Person[] {});
     }
 
+    @Test
+    void itShouldFindPersonsByPhrase() {
+        Person[] found = SearchingModule.getPersonsByName(persons, "org");
+        assertArrayEquals(found, new Person[] {persons[1], persons[2]});
+    }
+
+    @Test
+    void itShouldReturnEmptyIfNoNameMatches() {
+        Person[] found = SearchingModule.getPersonsByName(persons, "zzz");
+        assertArrayEquals(found, new Person[] {});
+    }
+
 }

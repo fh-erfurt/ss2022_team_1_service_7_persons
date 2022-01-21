@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /** Class representing an Exception thrown if no person was found. */
 class PersonNotFoundException extends Exception
@@ -36,7 +38,19 @@ public class SearchingModule {
      * @return {Person[]} - An array of found persons. If none were found, it returns [].
      */
     public static Person[] getPersonsByName(Person[] persons, String phrase) {
-        return null;
+        ArrayList<Person> foundPersons = new ArrayList<>();
+
+        // Create pattern to search for phrase with any characters before or after
+        Pattern namePattern = Pattern.compile("^.*" + phrase + ".*$");
+
+        // Test pattern for every person and safe if match
+        for (Person person: persons) {
+            if (namePattern.matcher(person.getName()).find()) {
+                foundPersons.add(person);
+            }
+        }
+
+        return foundPersons.toArray(Person[]::new);
     }
 
     /**
