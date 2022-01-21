@@ -29,8 +29,9 @@ public class Person implements Comparable<Person> {
         salutation = null;
     }
 
-    public Person(String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, Faculty faculty, Room room, Salutation salutation) {
+    public Person(int id, String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, Faculty faculty, Room room, Salutation salutation) {
         this.phone = ""; this.fax = ""; this.email = "";
+        this.id = id;
         setPhone(phone);
         setFax(fax);
         setEmail(email);

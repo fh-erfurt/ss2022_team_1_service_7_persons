@@ -21,7 +21,8 @@ class PersonTest {
 
     @Test
     void itShouldCreatePerson() {
-        Person person = new Person("675-759-3583", new String[] {"Ms", "Dr."}, "Bail", "Haggerwood", "6757593583", new String[] {"Nurse Practicioner"}, "bhaggerwood0@eventbrite.com", null, null, Salutation.Frau);
+        Person person = new Person(1, "675-759-3583", new String[] {"Ms", "Dr."}, "Bail", "Haggerwood", "6757593583", new String[] {"Nurse Practicioner"}, "bhaggerwood0@eventbrite.com", null, null, Salutation.Frau);
+        assertEquals(1, person.getId());
         assertEquals("675-759-3583", person.getPhone());
         assertArrayEquals(new String[] {"Ms", "Dr."}, person.getTitles());
         assertEquals("6757593583", person.getFax());
