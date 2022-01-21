@@ -24,12 +24,12 @@ public class Person implements Comparable<Person> {
         lastname = "";
         fax = "";
         email = "";
-        faculty = null;
+        faculty = new Faculty(0);
         room = null;
         salutation = null;
     }
 
-    public Person(int id, String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, Faculty faculty, Room room, Salutation salutation) {
+    public Person(int id, String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, int faculty, Room room, Salutation salutation) {
         this.phone = ""; this.fax = ""; this.email = "";
         this.id = id;
         setPhone(phone);
@@ -39,9 +39,10 @@ public class Person implements Comparable<Person> {
         this.firstname = firstname;
         this.lastname = lastname;
         this.positions = new ArrayList<>(Arrays.asList(positions));
-        this.faculty = null;
         this.room = null;
         this.salutation = salutation;
+
+        this.faculty = new Faculty(faculty);
     }
 
     @Override

@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SearchingModuleTest {
 
-    private List<Person> persons;
+    private Person[] persons;
 
     @BeforeEach
     void init() throws IOException {
@@ -21,12 +22,24 @@ public class SearchingModuleTest {
 
     @Test
     void itShouldFindPersonsByID() throws PersonNotFoundException {
-        assertEquals(SearchingModule.getPersonByID(persons.toArray(Person[]::new), 2), persons.get(1));
+        assertEquals(SearchingModule.getPersonByID(persons, 2), persons[1]);
     }
 
     @Test
     void itShouldThrowExceptionIfIdDoesntExists() {
-        assertThrows(PersonNotFoundException.class, () -> SearchingModule.getPersonByID(persons.toArray(Person[]::new), -1));
+        assertThrows(PersonNotFoundException.class, () -> SearchingModule.getPersonByID(persons, -1));
+    }
+
+    @Test
+    void itShouldFindPersonsByFacultyID() {
+        Person[] found = SearchingModule.getPersonsByFacultyID(persons, 1);
+        assertArrayEquals(found, new Person[] {persons[0], persons[2]});
+    }
+
+    @Test
+    void itShouldReturnEmptyArrayIfFacultyPersonsNotFound() {
+        Person[] found = SearchingModule.getPersonsByFacultyID(persons, -1);
+        assertArrayEquals(found, new Person[] {});
     }
 
 }

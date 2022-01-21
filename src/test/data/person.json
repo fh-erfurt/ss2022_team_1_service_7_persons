@@ -10,7 +10,7 @@
     "email": "bhaggerwood0@eventbrite.com",
     "salutation": "Frau",
     "room": null,
-    "faculty": null
+    "faculty": 1
   },
   {
     "id": 2,
@@ -23,7 +23,7 @@
     "email": "wdorgan1@cbsnews.com",
     "salutation": "Frau",
     "room": null,
-    "faculty": null
+    "faculty": 2
   },
   {
     "id": 3,
@@ -36,6 +36,6 @@
     "email": "alockwood3@addthis.com",
     "salutation": "Herr",
     "room": null,
-    "faculty": null
+    "faculty": 1
   }
 ]
