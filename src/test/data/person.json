@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "phone": "0173173990644",
     "titles": ["Ms", "Dr."],
     "firstname": "Bail",
@@ -9,9 +10,10 @@
     "email": "bhaggerwood0@eventbrite.com",
     "salutation": "Frau",
     "room": null,
-    "faculty": null
+    "faculty": 1
   },
   {
+    "id": 2,
     "phone": "+491517953677",
     "titles": ["Rev"],
     "firstname": "Wandie",
@@ -21,9 +23,10 @@
     "email": "wdorgan1@cbsnews.com",
     "salutation": "Frau",
     "room": null,
-    "faculty": null
+    "faculty": 2
   },
   {
+    "id": 3,
     "phone": "06442/3839023",
     "titles": ["Ms"],
     "firstname": "Alexander",
@@ -33,6 +36,6 @@
     "email": "alockwood3@addthis.com",
     "salutation": "Herr",
     "room": null,
-    "faculty": null
+    "faculty": 1
   }
 ]

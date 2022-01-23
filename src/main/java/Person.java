@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class Person implements Comparable<Person> {
+    private int id;
     private String phone;
     private ArrayList<String> titles;
     private String firstname;
@@ -15,6 +16,7 @@ public class Person implements Comparable<Person> {
     private Salutation salutation;
 
     public Person() {
+        id = 0;
         titles = new ArrayList<>();
         positions = new ArrayList<>();
         phone = "";
@@ -22,13 +24,14 @@ public class Person implements Comparable<Person> {
         lastname = "";
         fax = "";
         email = "";
-        faculty = null;
+        faculty = new Faculty(0);
         room = null;
         salutation = null;
     }
 
-    public Person(String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, Faculty faculty, Room room, Salutation salutation) {
+    public Person(int id, String phone, String[] titles, String firstname, String lastname, String fax, String[] positions, String email, int faculty, Room room, Salutation salutation) {
         this.phone = ""; this.fax = ""; this.email = "";
+        this.id = id;
         setPhone(phone);
         setFax(fax);
         setEmail(email);
@@ -36,9 +39,10 @@ public class Person implements Comparable<Person> {
         this.firstname = firstname;
         this.lastname = lastname;
         this.positions = new ArrayList<>(Arrays.asList(positions));
-        this.faculty = null;
         this.room = null;
         this.salutation = salutation;
+
+        this.faculty = new Faculty(faculty);
     }
 
     @Override
@@ -80,6 +84,9 @@ public class Person implements Comparable<Person> {
     public String[] getTitles() { return titles.toArray(new String[0]); }
     public void setTitles(String[] titles) { this.titles = new ArrayList<>(Arrays.asList(titles)); }
     public void addTitle(String newTitle) { titles.add(newTitle); }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getFirstname() { return firstname; }
     public void setFirstname(String firstname) { this.firstname = firstname; }
