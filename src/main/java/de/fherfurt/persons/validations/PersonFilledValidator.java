@@ -39,11 +39,11 @@ public class PersonFilledValidator implements IValidator<Person> {
                         .isBetween(2, 30, "lastname"))
                 .addTo(errors);
 
-        new ValidationErrorBuilder<Integer>()
-                .withCondition(new ValidationCondition<Integer>()
+        new ValidationErrorBuilder<String>()
+                .withCondition(new ValidationCondition<String>()
                         .withValue(person.getFaculty())
                         .isRequired("faculty"))
-                .withCondition(new ValidationCondition<Integer>()
+                .withCondition(new ValidationCondition<String>()
                         .withValue(person.getFaculty())
                         .isMin(0, "faculty"))
                 .addTo(errors);

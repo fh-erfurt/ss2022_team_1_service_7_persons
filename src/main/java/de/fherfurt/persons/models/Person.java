@@ -1,8 +1,15 @@
 package de.fherfurt.persons.models;
 
+import de.fherfurt.persons.core.interfaces.Room;
+import de.fherfurt.persons.types.Salutation;
 import org.json.JSONObject;
 
 import de.fherfurt.persons.api.PersonController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class representating the person data model.
@@ -11,9 +18,16 @@ import de.fherfurt.persons.api.PersonController;
  */
 public class Person implements Comparable<Person> {
     private int id;
-    private int faculty;
+    private String phone;
+    private List<String> titles;
     private String firstname;
     private String lastname;
+    private String fax;
+    private List<String> positions;
+    private String email;
+    private String faculty;
+    private Room room;
+    private Salutation salutation;
 
     /**
      * Creates an instance of a person with id.
@@ -22,7 +36,7 @@ public class Person implements Comparable<Person> {
      * @param firstname The firstname of the person.
      * @param lastname  The lastname of the person.
      */
-    public Person(int id, int faculty, String firstname, String lastname) {
+    public Person(int id, String faculty, String firstname, String lastname) {
         this.id = id;
         this.faculty = faculty;
         this.firstname = firstname;
@@ -35,7 +49,7 @@ public class Person implements Comparable<Person> {
      * @param firstname The firstname of the person.
      * @param lastname  The lastname of the person.
      */
-    public Person(int faculty, String firstname, String lastname) {
+    public Person(String faculty, String firstname, String lastname) {
         this.id = PersonController.getNextId();
         this.faculty = faculty;
         this.firstname = firstname;
@@ -74,9 +88,29 @@ public class Person implements Comparable<Person> {
      *
      * @return The persons faculty id.
      */
-    public int getFaculty() {
+    public String getFaculty() {
         return faculty;
     }
+
+
+    /**
+     * Get the positions of the person
+     *
+     * @return The persons positions.
+     */
+    public List<String> getPositions() { return positions; }
+
+    public List<String> getTitles() { return titles; }
+
+    public String getFax() { return fax; }
+
+    public String getEmail() { return email; }
+
+    public Room getRoom() { return room; }
+
+    public Salutation getSalutation() { return salutation; }
+
+    public String getPhone() { return this.phone; }
 
     /**
      * Get the id of the person
@@ -126,7 +160,7 @@ public class Person implements Comparable<Person> {
 
         return firstname.equals(other.firstname)
                 && lastname.equals(other.lastname)
-                && faculty == other.getFaculty();
+                && Objects.equals(faculty, other.getFaculty());
     }
 
     /**
