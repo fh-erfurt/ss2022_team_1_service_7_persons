@@ -1,6 +1,7 @@
 package de.fherfurt.persons.api;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -15,13 +16,13 @@ public class SearchingModule {
      * Returns all persons found with the corresponding Faculty id.
      *
      * @param persons The reference to an array list of persons.
-     * @param id      The id of the faculty.
+     * @param faculty The name of the faculty.
      *
      * @return An list of found persons. If none were found, it an empty list.
      */
-    public static List<Person> getPersonsByFacultyID(List<Person> persons, int id) {
+    public static List<Person> getPersonsByFaculty(List<Person> persons, String faculty) {
         return persons.stream()
-                .filter(person -> person.getFaculty() == id)
+                .filter(person -> Objects.equals(person.getFaculty(), faculty))
                 .collect(Collectors.toList());
     }
 
