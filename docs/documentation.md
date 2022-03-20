@@ -58,6 +58,7 @@ ___
 ___
 ## API
 
+### [Interface](https://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/person-client/src/main/java/de/fherfurt/persons/client/PersonClient.java#L17)
 
 ### [PersonResource](https://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/person-client/src/main/java/de/fherfurt/persons/client/PersonClient.java#L17) methods:
 ```bash
