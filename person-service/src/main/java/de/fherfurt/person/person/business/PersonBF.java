@@ -11,7 +11,7 @@ import java.util.Optional;
  * This business facade is used to work (means save, find and delete)
  * {@link Person}s.
  *
- * @author Jonas Liehmann <johann.liehmann@fh-erfurt.de>
+ * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @Slf4j

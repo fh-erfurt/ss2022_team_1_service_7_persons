@@ -12,7 +12,7 @@ import java.util.Optional;
  * This class represents the production implementation for the functionality of
  * the person submodule.
  *
- * @author Jonas Liehmann <johann.liehmann@fh-erfurt.de>
+ * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @NoArgsConstructor(staticName = "of")
