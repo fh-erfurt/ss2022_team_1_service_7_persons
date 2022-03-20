@@ -1,0 +1,82 @@
+package de.fherfurt.persons.client.objects;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
+
+/**
+ * Container that holds all information of a person for the transport from the
+ * <i>PERSON-Service</i> to another one.
+ *
+ * @author Niklas Schumann <niklas.schumann@fh-erfurt.de>
+ * @author Justin Noske <justin.noske@fh-erfurt.de>
+ */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder(setterPrefix = "with")
+public class PersonDto {
+    /**
+     * Unique identifier of an already persisted person.
+     */
+    private int id;
+
+    /**
+     * The persons email address.
+     */
+    private String email;
+
+    /**
+     * The persons salutation.
+     */
+    private Salutation salutation;
+
+    /**
+     * The persons firstname.
+     */
+    private String firstname;
+
+    /**
+     * The persons lastname.
+     */
+    private String lastname;
+
+    /**
+     * The persons usernames.
+     */
+    private String username;
+
+    /**
+     * The persons phone number.
+     */
+    private String phone;
+
+    /**
+     * The persons profile picture url.
+     */
+    private String imageUrl;
+
+    /**
+     * The persons fax number.
+     */
+    private String fax;
+
+    /**
+     * The persons faculty id.
+     */
+    private int facultyId;
+
+    /**
+     * A list of the person's titles
+     */
+    private List<String> titles;
+
+    /**
+     * A list of the person's positions in university.
+     */
+    private List<String> positions;
+
+}
