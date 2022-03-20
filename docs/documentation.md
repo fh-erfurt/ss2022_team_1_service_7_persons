@@ -33,7 +33,7 @@ It contains diagrams and code to access and manage persons.
 ___
 ## FAQ
 > ### Q: Can I select certain return attributes of a person?
-> #### A: Yes, you can we have dto's declared for this. You can build your own person.
+> #### A: Yes, we have dto's declared for this. You can build your own person.
 
 
 
