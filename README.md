@@ -3,5 +3,5 @@
 ## Contributers
 * Jonas Liehmann(DevLead)
 * Tobias Kärst(PO)
-* Niklas Schumann
+* Niklas Schumann 
 * Justin Noske

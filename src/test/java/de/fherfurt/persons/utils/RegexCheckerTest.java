@@ -17,7 +17,7 @@ public class RegexCheckerTest {
     }
 
     @Test
-    public void itShouldCheckPhoneNumbers() {
+    public void itShouldCheckPhoneNumbers()  {
         assertTrue(RegexChecker.checkPhone("0173173990644"));
         assertTrue(RegexChecker.checkPhone("+491517953677"));
         assertTrue(RegexChecker.checkPhone("06442/3839023"));
