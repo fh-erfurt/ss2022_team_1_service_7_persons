@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
- * @author Jonas Liehmann <johann.liehmann@fh-erfurt.de>
+ * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

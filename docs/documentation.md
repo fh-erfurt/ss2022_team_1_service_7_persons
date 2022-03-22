@@ -33,7 +33,7 @@ It contains diagrams and code to access and manage persons.
 ___
 ## FAQ
 > ### Q: Can I select certain return attributes of a person?
-> #### A: Yes, you can we have dto's declared for this. You can build your own person.
+> #### A: Yes, we have dto's declared for this. You can build your own person.
 
 
 
@@ -56,47 +56,45 @@ ___
 
 
 ___
-## Api
-_* add available Methods and Attributes_
+## API
 
-#### Example
-````bash
-String json = """ {
-    "firstname": "Max",
-    "lastname": "Mustermann",
-    "faculty": "Angewandte Informatik"
+### [Interface](https://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/person-client/src/main/java/de/fherfurt/persons/client/PersonClient.java#L17)
+
+### [PersonResource](https://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/person-client/src/main/java/de/fherfurt/persons/client/PersonClient.java#L17) methods:
+```bash
+Optional<PersonDto> findById(int id);
+Optional<PersonDto> findByEmail(String email);
+List<PersonDto> findByFaculty(int facultyId);
+List<PersonDto> findByName(String name);
+void deleteBy(int id);
+```
+
+### [Getters](https://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/person-client/src/main/java/de/fherfurt/persons/client/objects/PersonDto.java#L21)
+```bash
+int id
+String email
+Salutation salutation
+String firstname
+String lastname
+String username
+String phone
+String imageUrl
+String fax
+int facultyId
+List<String> titles
+List<String> positions
+```
+>`PersonDtoInstance.get<attribute>()`
+
+### Example get id of person by mail
+```java
+class myClass {
+   PersonResource PersonServerClient = PersonResource.of();
+
+   // Get Person by Mail
+   PersonDto myPerson = PersonServerClient.findByEmail("test@fh-erfurt.de").get();
+
+   // Get ID of this Person
+   Int myPersonId = myPerson.getId();
 }
-"""
-
-Optional<Person> person = builder
-        .addValidator(new PersonFilledValidator())
-        .fromJSON(json)
-        .build();
-````
-#### Example
-````bash
-new ValidationErrorBuilder<String>()
-  .withCondition(new ValidationCondition<String>)
-        .withValue(person.getFirstname())
-        .isRequired("firstname")
-  .withCondition(new ValidationCondition<String>)
-        .withValue(person.getFirstname())
-        .isBetween(2,30,"firstname")
-  .addTo(errors);
-````
-#### Example
-````bash
-Optional<Person> person = builder
-  .addValidator(new PersonFilledValidator())
-  .withName("Max", "Mustermann")
-  .build();
-````
-
-#### Example
-````bash
-Optional<Person> person = builder
-  .addValidator(new PersonFilledValidator())
-  .fromPerson(oldPerson)
-  .withName("Paul", "Mustermann")
-  .build();
-````
+```

@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * Mapper that allows the conversion of {@link Person} to/from
  * {@link PersonDto}.
  * 
- * @author Jonas Liehmann <johann.liehmann@fh-erfurt.de>
+ * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @Mapper(builder = @Builder(disableBuilder = true), mappingControl = DeepClone.class)
