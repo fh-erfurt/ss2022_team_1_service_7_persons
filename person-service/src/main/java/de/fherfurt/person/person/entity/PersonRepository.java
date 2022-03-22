@@ -52,36 +52,37 @@ public class PersonRepository implements Repository<Person> {
     }
 
     /**
-     * Find an entity by its email.
+     * Find an entity by its email. If no entity is available, an empty
+     * {@link Optional} is returned.
      *
      * @throws NoResultException      If no user with the mail was found.
      * @throws ToManyResultsException If multiple users was found in the database
      *                                with the same id.
      *
      * @param email Email of the searched entity
-     * @return The entity
+     * @return The entity or empty
      */
-    public Person findByEmail(String email) {
+    public Optional<Person> findByEmail(String email) {
         List<Person> persons = database.findBy(Person.class, person -> Objects.equals(person.getEmail(), email));
 
-        if (persons.isEmpty()) {
+        /*if (persons.isEmpty()) {
             throw new NoResultException("Could not found person with email [" + email + "]");
-        }
+        }*/
 
         if (persons.size() > 1) {
             throw new ToManyResultsException("No unique result found for email [" + email + "]");
         }
 
-        return persons.get(0);
+        if (persons.size() == 0) return Optional.empty();
+
+        return Optional.of(persons.get(0));
     }
 
     /**
      * Find entities by its name.
      *
-     * @throws NoResultException If no user with the mail was found.
-     *
      * @param name The name (phrase) of the person.
-     * @return The entities
+     * @return The entities or an empty list
      */
     public List<Person> findByName(String name) {
         // Create pattern to search for phrase with any characters before or after
@@ -91,21 +92,27 @@ public class PersonRepository implements Repository<Person> {
         List<Person> persons = database.findBy(Person.class,
                 person -> namePattern.matcher(person.getFirstname() + " " + person.getLastname()).find());
 
-        if (persons.isEmpty()) {
+        /*if (persons.isEmpty()) {
             throw new NoResultException("Could not found person with name [" + name + "]");
-        }
+        }*/
 
         return persons;
     }
 
+    /**
+     * Find entities by its faculty id.
+     *
+     * @param facultyId The faculty id of the person.
+     * @return The entities or an empty list
+     */
     public List<Person> findByFaculty(int facultyId) {
         // Test pattern for every person and collect if match
         List<Person> persons = database.findBy(Person.class,
                 person -> Objects.equals(person.getFacultyId(), facultyId));
 
-        if (persons.isEmpty()) {
+        /*if (persons.isEmpty()) {
             throw new NoResultException("Could not found person with facultyId [" + facultyId + "]");
-        }
+        }*/
 
         return persons;
     }

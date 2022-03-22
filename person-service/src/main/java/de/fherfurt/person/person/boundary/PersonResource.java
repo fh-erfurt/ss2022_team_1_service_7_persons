@@ -1,5 +1,6 @@
 package de.fherfurt.person.person.boundary;
 
+import de.fherfurt.person.core.mappers.BeanMapper;
 import de.fherfurt.person.person.business.PersonBF;
 import de.fherfurt.persons.client.PersonClient;
 import de.fherfurt.persons.client.objects.PersonDto;
@@ -17,71 +18,45 @@ import java.util.Optional;
  */
 @NoArgsConstructor(staticName = "of")
 public class PersonResource implements PersonClient {
-    private final PersonBF ratingBF = PersonBF.of();
+    private final PersonBF personBF = PersonBF.of();
 
     /**
-     * Takes the id of a {@link PersonDto} and searches it. If the corresponding
-     * {@link PersonDto} is found,
-     * it will be returned, otherwise an empty {@link Optional} is returned.
-     *
-     * @param id The ID of the person.
-     * @return The found Person or an empty optional.
+     * {@inheritDoc}
      */
     @Override
-    public Optional<PersonDto> findById(int id) {
-        return Optional.empty();
+    public Optional<PersonDto> findById(final int id) {
+        return personBF.findBy(id).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
     }
 
     /**
-     * Takes the email of a {@link PersonDto} and searches it. If the corresponding
-     * {@link PersonDto} is found,
-     * it will be returned, otherwise an empty {@link Optional} is returned.
-     *
-     * @param email The email of the person.
-     * @return The found Person or an empty optional.
+     * {@inheritDoc}
      */
     @Override
     public Optional<PersonDto> findByEmail(String email) {
-        return Optional.empty();
+        return personBF.findByEmail(email).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
     }
 
     /**
-     * Takes the faculty of a {@link PersonDto} and searches all persons in the
-     * faculty. If corresponding
-     * {@link PersonDto} are found, it will return them as a {@link List}. If no
-     * persons match the faculty (e.g. wrong
-     * faculty name), an empty {@link List} is returned.
-     *
-     * @param facultyId The faculty id of the person.
-     * @return The found persons as list.
+     * {@inheritDoc}
      */
     @Override
     public List<PersonDto> findByFaculty(int facultyId) {
-        return null;
+        return (List<PersonDto>) personBF.findByFaculty(facultyId).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person));
     }
 
     /**
-     * Takes the name of a {@link PersonDto} and searches all persons somehow
-     * matching the provided name. If
-     * corresponding {@link PersonDto} are found, it will return them as a
-     * {@link List}. If no persons match
-     * the provided name phrase, an empty {@link List} is returned.
-     *
-     * @param name The name (phrase) of the person.
-     * @return The found persons as list.
+     * {@inheritDoc}
      */
     @Override
     public List<PersonDto> findByName(String name) {
-        return null;
+        return (List<PersonDto>) personBF.findByName(name).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person));
     }
 
     /**
-     * Takes the ID of a {@link PersonDto} and deletes it.
-     *
-     * @param id The ID of the person that must be deleted
+     * {@inheritDoc}
      */
     @Override
     public void deleteBy(int id) {
-
+        personBF.delete(id);
     }
 }
