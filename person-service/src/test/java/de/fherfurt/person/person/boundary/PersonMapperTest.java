@@ -36,7 +36,7 @@ public class PersonMapperTest {
                 .withFax("963-270-1871")
                 .withFacultyId(3)
                 .withTitles(List.of("Dr."))
-                .withPositions(List.of("Dozentin"))
+                .withPositions(List.of("Lecturer"))
                 .build();
 
         // WHEN
@@ -44,6 +44,35 @@ public class PersonMapperTest {
 
         // THEN
         Assertions.assertEquals(result.getId(), 1);
+        Assertions.assertEquals(result.getEmail(), "cdredge0@hhs.gov");
+        Assertions.assertEquals(result.getUsername(), "CarlineDredge");
+    }
+
+    @Test
+    void shouldMapCompletePersonDtoToEntity() {
+        // GIVEN
+        final PersonDto dto = PersonDto.builder()
+                .withId(1)
+                .withEmail("cdredge0@hhs.gov")
+                .withSalutation("Ms.")
+                .withFirstname("Carline")
+                .withLastname("Dredge")
+                .withUsername("CarlineDredge")
+                .withPhone("412-893-9724")
+                .withImageUrl("https://placehold.jp/150x150.png")
+                .withFax("963-270-1871")
+                .withFacultyId(3)
+                .withTitles(List.of("Dr."))
+                .withPositions(List.of("Lecturer"))
+                .build();
+
+        // WHEN
+        final Person result = BeanMapper.mapFromDto(dto);
+
+        // THEN
+        Assertions.assertEquals(result.getId(), 1);
+        Assertions.assertEquals(result.getEmail(), "cdredge0@hhs.gov");
+        Assertions.assertEquals(result.getUsername(), "CarlineDredge");
     }
 
 }
