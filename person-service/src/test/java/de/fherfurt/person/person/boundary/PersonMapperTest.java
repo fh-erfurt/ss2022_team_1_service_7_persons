@@ -14,6 +14,9 @@ import static de.fherfurt.person.TestTags.BOUNDARY;
 import static de.fherfurt.person.TestTags.DOMAIN;
 import static de.fherfurt.person.TestTags.UNIT;
 
+/**
+ * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
+ */
 @Tags({
         @Tag(UNIT),
         @Tag(DOMAIN),

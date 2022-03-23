@@ -65,10 +65,6 @@ public class PersonRepository implements Repository<Person> {
     public Optional<Person> findByEmail(String email) {
         List<Person> persons = database.findBy(Person.class, person -> Objects.equals(person.getEmail(), email));
 
-        /*if (persons.isEmpty()) {
-            throw new NoResultException("Could not found person with email [" + email + "]");
-        }*/
-
         if (persons.size() > 1) {
             throw new ToManyResultsException("No unique result found for email [" + email + "]");
         }
@@ -89,14 +85,7 @@ public class PersonRepository implements Repository<Person> {
         Pattern namePattern = Pattern.compile("^.*" + name + ".*$");
 
         // Test pattern for every person and collect if match
-        List<Person> persons = database.findBy(Person.class,
-                person -> namePattern.matcher(person.getFirstname() + " " + person.getLastname()).find());
-
-        /*if (persons.isEmpty()) {
-            throw new NoResultException("Could not found person with name [" + name + "]");
-        }*/
-
-        return persons;
+        return database.findBy(Person.class, person -> namePattern.matcher(person.getFirstname() + " " + person.getLastname()).find());
     }
 
     /**
@@ -107,14 +96,7 @@ public class PersonRepository implements Repository<Person> {
      */
     public List<Person> findByFaculty(int facultyId) {
         // Test pattern for every person and collect if match
-        List<Person> persons = database.findBy(Person.class,
-                person -> Objects.equals(person.getFacultyId(), facultyId));
-
-        /*if (persons.isEmpty()) {
-            throw new NoResultException("Could not found person with facultyId [" + facultyId + "]");
-        }*/
-
-        return persons;
+        return database.findBy(Person.class, person -> Objects.equals(person.getFacultyId(), facultyId));
     }
 
     /**

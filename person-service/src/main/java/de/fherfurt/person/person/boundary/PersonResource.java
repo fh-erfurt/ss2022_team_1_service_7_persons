@@ -2,13 +2,13 @@ package de.fherfurt.person.person.boundary;
 
 import de.fherfurt.person.core.mappers.BeanMapper;
 import de.fherfurt.person.person.business.PersonBF;
-import de.fherfurt.person.person.entity.Person;
 import de.fherfurt.persons.client.PersonClient;
 import de.fherfurt.persons.client.objects.PersonDto;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This class represents the production implementation for the functionality of
@@ -42,7 +42,7 @@ public class PersonResource implements PersonClient {
      */
     @Override
     public List<PersonDto> findByFaculty(int facultyId) {
-        return (List<PersonDto>) personBF.findByFaculty(facultyId).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person));
+        return personBF.findByFaculty(facultyId).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
     }
 
     /**
@@ -50,7 +50,7 @@ public class PersonResource implements PersonClient {
      */
     @Override
     public List<PersonDto> findByName(String name) {
-        return (List<PersonDto>) personBF.findByName(name).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person));
+        return personBF.findByName(name).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
     }
 
     /**
