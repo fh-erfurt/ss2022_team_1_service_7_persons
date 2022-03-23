@@ -2,6 +2,7 @@ package de.fherfurt.person.person.boundary;
 
 import de.fherfurt.person.core.mappers.BeanMapper;
 import de.fherfurt.person.person.business.PersonBF;
+import de.fherfurt.person.person.entity.Person;
 import de.fherfurt.persons.client.PersonClient;
 import de.fherfurt.persons.client.objects.PersonDto;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,17 @@ public class PersonResource implements PersonClient {
      */
     @Override
     public Optional<PersonDto> findById(final int id) {
-        return personBF.findBy(id).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
+        Optional<Person> person = personBF.findBy(id);
+
+        if (person.isEmpty()) return Optional.empty();
+
+        Optional<PersonDto> mappedPerson = Optional.of(BeanMapper.mapToDto(person.get()));
+
+        System.out.println(mappedPerson.get());
+
+        return mappedPerson;
+
+        //return personBF.findBy(id).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
     }
 
     /**
@@ -58,5 +69,13 @@ public class PersonResource implements PersonClient {
     @Override
     public void deleteBy(int id) {
         personBF.delete(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void save(PersonDto person) {
+        personBF.save(BeanMapper.mapFromDto(person));
     }
 }

@@ -1,9 +1,6 @@
 package de.fherfurt.persons.client.objects;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,9 +11,11 @@ import java.util.List;
  * @author Niklas Schumann <niklas.schumann@fh-erfurt.de>
  * @author Justin Noske <justin.noske@fh-erfurt.de>
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder(setterPrefix = "with")
 public class PersonDto {
     /**

@@ -66,4 +66,13 @@ public interface PersonClient {
      * @param id The ID of the person that must be deleted
      */
     void deleteBy(int id);
+
+    /**
+     * Takes a person instance of a {@link PersonDto} object and
+     * saves it to the database.
+     *
+     * @param person The person which should get saved.
+     */
+    void save(PersonDto person);
+
 }

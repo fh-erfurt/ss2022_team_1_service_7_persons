@@ -1,10 +1,8 @@
 package de.fherfurt.person.person.business;
 
-import de.fherfurt.person.core.persistence.errors.NoResultException;
 import de.fherfurt.person.person.entity.Person;
 import de.fherfurt.person.person.entity.PersonRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +14,6 @@ import java.util.Optional;
  * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
-@Slf4j
 @RequiredArgsConstructor(staticName = "of")
 public class PersonBF {
 
