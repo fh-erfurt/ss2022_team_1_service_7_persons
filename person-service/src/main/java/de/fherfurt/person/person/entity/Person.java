@@ -1,7 +1,6 @@
 package de.fherfurt.person.person.entity;
 
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
-import de.fherfurt.persons.client.objects.Salutation;
 import lombok.*;
 
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.List;
 public class Person extends BaseBusinessEntity {
 
     private String email;
-    private Salutation salutation;
+    private String salutation;
     private String firstname;
     private String lastname;
     private String username;
@@ -32,7 +31,7 @@ public class Person extends BaseBusinessEntity {
     private List<String> positions;
 
     @Builder(setterPrefix = "with")
-    public Person(int id, String email, Salutation salutation, String firstname, String lastname, String username,
+    public Person(int id, String email, String salutation, String firstname, String lastname, String username,
             String phone, String imageUrl, String fax, int facultyId, List<String> titles, List<String> positions) {
         super(id);
         this.email = email;

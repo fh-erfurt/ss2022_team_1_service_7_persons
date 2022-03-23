@@ -26,17 +26,7 @@ public class PersonResource implements PersonClient {
      */
     @Override
     public Optional<PersonDto> findById(final int id) {
-        Optional<Person> person = personBF.findBy(id);
-
-        if (person.isEmpty()) return Optional.empty();
-
-        Optional<PersonDto> mappedPerson = Optional.of(BeanMapper.mapToDto(person.get()));
-
-        System.out.println(mappedPerson.get());
-
-        return mappedPerson;
-
-        //return personBF.findBy(id).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
+        return personBF.findBy(id).map(person -> (PersonDto) BeanMapper.mapToDto(person)).or(Optional::empty);
     }
 
     /**

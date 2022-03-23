@@ -3,7 +3,6 @@ package de.fherfurt.person.person.boundary;
 import de.fherfurt.person.core.mappers.BeanMapper;
 import de.fherfurt.person.person.entity.Person;
 import de.fherfurt.persons.client.objects.PersonDto;
-import de.fherfurt.persons.client.objects.Salutation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -28,7 +27,7 @@ public class PersonMapperTest {
         final Person entity = Person.builder()
                 .withId(1)
                 .withEmail("cdredge0@hhs.gov")
-                .withSalutation(Salutation.Frau)
+                .withSalutation("Ms.")
                 .withFirstname("Carline")
                 .withLastname("Dredge")
                 .withUsername("CarlineDredge")

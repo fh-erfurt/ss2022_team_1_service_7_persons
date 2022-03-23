@@ -37,10 +37,6 @@ public class PersonResourceTest {
 
         // THEN
         Assertions.assertTrue(found.isPresent());
-
-        System.out.println(found.get());
-
-
         Assertions.assertEquals(found.get().getEmail(), "cfaunch0@symantec.com");
     }
 }

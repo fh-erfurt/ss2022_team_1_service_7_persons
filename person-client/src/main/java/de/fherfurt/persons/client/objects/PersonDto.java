@@ -31,7 +31,7 @@ public class PersonDto {
     /**
      * The persons salutation.
      */
-    private Salutation salutation;
+    private String salutation;
 
     /**
      * The persons firstname.

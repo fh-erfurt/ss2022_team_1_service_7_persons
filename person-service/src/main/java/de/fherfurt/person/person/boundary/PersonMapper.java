@@ -5,6 +5,7 @@ import de.fherfurt.person.person.entity.Person;
 import de.fherfurt.persons.client.objects.PersonDto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.control.DeepClone;
 import org.mapstruct.factory.Mappers;
 
@@ -15,7 +16,11 @@ import org.mapstruct.factory.Mappers;
  * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
-@Mapper(builder = @Builder(disableBuilder = true), mappingControl = DeepClone.class)
+@Mapper(
+        builder = @Builder(disableBuilder = true),
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        mappingControl = DeepClone.class
+)
 public interface PersonMapper extends BeanMapper<Person, PersonDto> {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 }
