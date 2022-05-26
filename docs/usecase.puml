@@ -1,0 +1,43 @@
+@startuml usecase
+left to right direction
+
+actor Student
+actor Developer
+actor Eymployee
+actor Lecturer
+
+package PersonService {
+  usecase "Filter Persons" as UCFilter
+  usecase "Sort Persons" as UCSort
+  usecase "Search Persons" as UCSearch
+  usecase "Request person details" as UCRequest
+  usecase "Embed Person" as UCEmbed
+  usecase "CRUD personal data" as UCPersonal
+  usecase "Sign in" as UCSignIn
+  usecase "Sign up" as UCSignUp
+  usecase "CRUD lecutred modules" as UCModules
+}
+
+UCFilter .> UCSearch : include
+UCSort .> UCSearch : include
+UCRequest .> UCSearch : extend
+
+UCSignIn .> UCPersonal : include
+UCSignIn .> UCSignUp : include
+UCSignIn .> UCModules : include
+
+Eymployee <|-- Lecturer
+
+Student --> UCFilter
+Student --> UCSort
+Student --> UCSearch
+Student --> UCRequest
+
+Developer --> UCEmbed
+
+Eymployee --> UCPersonal
+Eymployee --> UCSignIn
+Eymployee --> UCSignUp
+
+Lecturer --> UCModules
+@enduml
