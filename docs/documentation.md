@@ -9,6 +9,10 @@
 - Bietet eine Übersicht über die für Studierende relevanten Personen.
 - Ermöglicht das erstellen und verwalten von eigenen Nutzeraccounts.
 
+Der folgende service könnte wie in folgendem mockup in der späteren app verwendet werden:
+
+![usage demo](https://raw.githubusercontent.com/fh-erfurt/ws2022_team_1_service_7_persons/java2/.github/assets/usage_demo.png)
+
 ## User stories
 
 - (U1) Als Angestellter der FHE möchte ich meine Daten im System erstellen, ändern und löschen können.
