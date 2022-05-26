@@ -1,4 +1,4 @@
-<div id="top" />
+<div id="top"></div>
 
 <br />
 <div align="center">
@@ -38,7 +38,11 @@
 
 # Getting started
 
-# Development
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+# Developmen
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Contributors
 
@@ -48,13 +52,16 @@ This repository is maintained by the following students:
 * Niklas Schumann
 * Justin Noske
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 # Contributing
 
 This repository was created for educational purposes only so no contributions are required.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # License
 
 Distributed under the MIT License, see the [LICENSE](./LICENSE) file for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-ps://github.com/fh-erfurt/ws2021_team_1_service_7_persons/blob/master/docs/documentation.md)
