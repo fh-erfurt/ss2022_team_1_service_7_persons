@@ -3,6 +3,7 @@ package de.fherfurt.persons.client.objects;
 import lombok.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Container that holds all information of a person for the transport from the
@@ -78,4 +79,13 @@ public class PersonDto {
      */
     private List<String> positions;
 
+    /**
+     * The account of the person.
+     */
+    private AccountDto account;
+
+    /**
+     * The persons profile image (can be null).
+     */
+    private ImageDto images;
 }
