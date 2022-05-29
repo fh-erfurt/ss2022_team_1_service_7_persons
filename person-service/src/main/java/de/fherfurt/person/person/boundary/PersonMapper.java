@@ -1,7 +1,7 @@
 package de.fherfurt.person.person.boundary;
 
 import de.fherfurt.person.core.mappers.BeanMapper;
-import de.fherfurt.person.person.entity.Person;
+import de.fherfurt.person.person.entity.models.Person;
 import de.fherfurt.persons.client.objects.PersonDto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

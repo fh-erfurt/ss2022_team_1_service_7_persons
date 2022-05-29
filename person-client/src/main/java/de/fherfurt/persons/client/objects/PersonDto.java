@@ -25,11 +25,6 @@ public class PersonDto {
     private int id;
 
     /**
-     * The persons email address.
-     */
-    private String email;
-
-    /**
      * The persons salutation.
      */
     private String salutation;
@@ -45,19 +40,9 @@ public class PersonDto {
     private String lastname;
 
     /**
-     * The persons usernames.
-     */
-    private String username;
-
-    /**
      * The persons phone number.
      */
     private String phone;
-
-    /**
-     * The persons profile picture url.
-     */
-    private String imageUrl;
 
     /**
      * The persons fax number.
@@ -87,5 +72,5 @@ public class PersonDto {
     /**
      * The persons profile image (can be null).
      */
-    private ImageDto images;
+    private ImageDto profileImage;
 }

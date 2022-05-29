@@ -5,7 +5,7 @@ import de.fherfurt.person.core.persistence.Repository;
 import de.fherfurt.person.core.persistence.errors.NoResultException;
 import de.fherfurt.person.core.persistence.errors.ToManyResultsException;
 
-import de.fherfurt.persons.client.objects.PersonDto;
+import de.fherfurt.person.person.entity.models.Person;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -1,4 +1,4 @@
-package de.fherfurt.person.person.entity;
+package de.fherfurt.person.person.entity.models;
 
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
 import lombok.*;
@@ -15,35 +15,33 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Person extends BaseBusinessEntity {
-
-    private String email;
+@EqualsAndHashCode( onlyExplicitlyIncluded = true, callSuper = true )
+public class Person extends BaseBusinessEntity
+{
     private String salutation;
     private String firstname;
     private String lastname;
-    private String username;
     private String phone;
-    private String imageUrl;
     private String fax;
     private int facultyId;
     private List<String> titles;
     private List<String> positions;
+    private Account account;
+    private Image profileImage;
 
-    @Builder(setterPrefix = "with")
-    public Person(int id, String email, String salutation, String firstname, String lastname, String username,
-            String phone, String imageUrl, String fax, int facultyId, List<String> titles, List<String> positions) {
-        super(id);
-        this.email = email;
+    @Builder( setterPrefix = "with" )
+    public Person( int id, String salutation, String firstname, String lastname, String phone, String fax, int facultyId, List<String> titles, List<String> positions, Account account, Image profileImage )
+    {
+        super( id );
         this.salutation = salutation;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.username = username;
         this.phone = phone;
-        this.imageUrl = imageUrl;
         this.fax = fax;
         this.facultyId = facultyId;
         this.titles = titles;
         this.positions = positions;
+        this.account = account;
+        this.profileImage = profileImage;
     }
 }

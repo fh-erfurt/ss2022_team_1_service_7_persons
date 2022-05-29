@@ -2,6 +2,7 @@ package de.fherfurt.person.person.entity;
 
 import de.fherfurt.person.core.persistence.Database;
 import de.fherfurt.person.core.persistence.errors.ToManyResultsException;
+import de.fherfurt.person.person.entity.models.Person;
 import org.assertj.core.api.Assertions;
 
 import org.junit.jupiter.api.Tag;

@@ -1,8 +1,6 @@
 package de.fherfurt.person.person.business;
 
-import de.fherfurt.person.core.persistence.errors.NoResultException;
-import de.fherfurt.person.core.persistence.errors.ToManyResultsException;
-import de.fherfurt.person.person.entity.Person;
+import de.fherfurt.person.person.entity.models.Person;
 import de.fherfurt.person.person.entity.PersonRepository;
 import lombok.RequiredArgsConstructor;
 
