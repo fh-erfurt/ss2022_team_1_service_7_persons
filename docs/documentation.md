@@ -39,7 +39,7 @@ implementiert und sind deswegen an dieser Stelle nicht zu beachten.
 ```mermaid
 erDiagram
     PERSON ||--|| ACCOUNT : besitzt
-    PERSON }o--o{ MODULE : besitzt
+    PERSON }o--o{ MODULE : unterrichtet
     PERSON {
         string salutation
         string firstname
