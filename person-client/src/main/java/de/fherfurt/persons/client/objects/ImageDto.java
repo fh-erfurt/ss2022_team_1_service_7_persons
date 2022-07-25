@@ -13,12 +13,13 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(setterPrefix = "with")
+@Builder(setterPrefix = "with", toBuilder = true)
+@EqualsAndHashCode( onlyExplicitlyIncluded = true )
 public class ImageDto {
     /**
      * Unique identifier of an already persisted image.
      */
-    private int id;
+    private long id;
 
     /**
      * The name of the image file.

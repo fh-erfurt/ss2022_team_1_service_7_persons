@@ -3,6 +3,9 @@ package de.fherfurt.person.person.entity.models;
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Data object that holds the information from the database.
  *
@@ -11,18 +14,14 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@EqualsAndHashCode( onlyExplicitlyIncluded = true, callSuper = true )
+@EqualsAndHashCode( callSuper = true )
+@Entity
+@Builder( setterPrefix = "with" )
+@Table
 public class Image extends BaseBusinessEntity
 {
     private String name;
     private String suffix;
-
-    @Builder( setterPrefix = "with" )
-    public Image( int id, String name, String suffix )
-    {
-        super( id );
-        this.name = name;
-        this.suffix = suffix;
-    }
 }

@@ -3,6 +3,7 @@ package de.fherfurt.person.person.entity.models;
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -10,12 +11,17 @@ import java.util.List;
  *
  * @author Niklas Schumann <niklas.schumann@fh-erfurt.de>
  * @author Justin Noske <justin.noske@fh-erfurt.de>
+ * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode( onlyExplicitlyIncluded = true, callSuper = true )
+@AllArgsConstructor
+@ToString(callSuper=true)
+@EqualsAndHashCode( callSuper = true )
+@Builder( setterPrefix = "with", toBuilder = true )
+@Entity
+@Table
 public class Person extends BaseBusinessEntity
 {
     private String salutation;
@@ -24,24 +30,16 @@ public class Person extends BaseBusinessEntity
     private String phone;
     private String fax;
     private int facultyId;
-    private List<String> titles;
-    private List<String> positions;
-    private Account account;
-    private Image profileImage;
 
-    @Builder( setterPrefix = "with" )
-    public Person( int id, String salutation, String firstname, String lastname, String phone, String fax, int facultyId, List<String> titles, List<String> positions, Account account, Image profileImage )
-    {
-        super( id );
-        this.salutation = salutation;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.phone = phone;
-        this.fax = fax;
-        this.facultyId = facultyId;
-        this.titles = titles;
-        this.positions = positions;
-        this.account = account;
-        this.profileImage = profileImage;
-    }
+    @ElementCollection
+    private List<String> titles;
+
+    @ElementCollection
+    private List<String> positions;
+
+    @OneToOne( cascade = CascadeType.PERSIST )
+    private Account account;
+
+    @OneToOne( cascade = CascadeType.PERSIST )
+    private Image profileImage;
 }

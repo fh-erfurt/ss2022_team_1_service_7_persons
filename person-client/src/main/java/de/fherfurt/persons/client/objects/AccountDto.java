@@ -13,12 +13,13 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(setterPrefix = "with")
+@Builder(setterPrefix = "with", toBuilder = true)
+@EqualsAndHashCode( onlyExplicitlyIncluded = true )
 public class AccountDto {
     /**
      * Unique identifier of an already persisted account.
      */
-    private int id;
+    private long id;
 
     /**
      * The username of the persons account.

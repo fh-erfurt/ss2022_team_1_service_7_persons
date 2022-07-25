@@ -44,7 +44,7 @@ public interface PersonClient
      * @param id The ID of the person.
      * @return The found Person or an empty optional.
      */
-    Optional<PersonDto> findById( int id );
+    PersonDto findById( int id );
 
     /**
      * Takes the email of a {@link PersonDto} and searches it. If the corresponding {@link PersonDto}
@@ -53,7 +53,7 @@ public interface PersonClient
      * @param email The email of the person.
      * @return The found Person or an empty optional.
      */
-    Optional<PersonDto> findByEmail( String email );
+    PersonDto findByEmail( String email );
 
     /**
      * Takes the faculty of a {@link PersonDto} and searches all persons in the

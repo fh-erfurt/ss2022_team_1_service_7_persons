@@ -3,6 +3,9 @@ package de.fherfurt.person.person.entity.models;
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Data object that holds the information from the database.
  *
@@ -11,20 +14,16 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@EqualsAndHashCode( onlyExplicitlyIncluded = true, callSuper = true )
+@EqualsAndHashCode( callSuper = true )
+@Entity
+@Builder( setterPrefix = "with" )
+@Table
 public class Account extends BaseBusinessEntity
 {
     private String username;
     private String email;
     private String password;
 
-    @Builder( setterPrefix = "with" )
-    public Account(int id, String username, String email, String password )
-    {
-        super( id );
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
 }

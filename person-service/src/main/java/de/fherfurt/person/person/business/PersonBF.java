@@ -1,15 +1,19 @@
 package de.fherfurt.person.person.business;
 
+import de.fherfurt.person.core.persistence.DataController;
+import de.fherfurt.person.person.entity.FileSystemRepository;
+import de.fherfurt.person.person.entity.models.Image;
 import de.fherfurt.person.person.entity.models.Person;
-import de.fherfurt.person.person.entity.PersonRepository;
+import de.fherfurt.person.person.entity.core.IPersonRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * This business facade is used to work (means save, find and delete)
- * {@link Person}s.
+ * This business facade is used to work (means save, find and delete) {@link Person}s.
  *
  * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
@@ -17,70 +21,102 @@ import java.util.Optional;
 @RequiredArgsConstructor(staticName = "of")
 public class PersonBF {
 
-    private final PersonRepository personRepository = PersonRepository.of();
+    private final IPersonRepository personRepository = DataController.getInstance().getPersonRepository();
+    private final FilesBF filesBF = FilesBF.of();
 
     /**
-     * Save a person to the underlying storage.
+     * Save an entity to the underlying storage. It doesn't matter, if the entity is new or already saved.
+     * In case of update the changes are written too.
      *
-     * @param person Instance to save
+     * @param person Instance to persist to database
      */
-    public void save(final Person person) {
+    public void save( final Person person ) {
+        System.out.println(person);
         personRepository.save(person);
     }
 
     /**
-     * Find an person by its id. If no entity is available, an empty
-     * {@link Optional} is returned.
+     * Find all persisted entities.
      *
-     * @param id Id of the searched entity
-     * @return The person or empty
+     * @return All persisted entities or an empty list
      */
-    public Optional<Person> findBy(final int id) {
-        return personRepository.findBy(id);
+    public List<Person> findAll() {
+        return personRepository.findAll();
+    }
+
+
+    /**
+     * Find an entity by its id.
+     *
+     * @param id The id of the searched entity
+     * @return The found entity
+     */
+    public Person findBy( final int id ) {
+        Person person = personRepository.findBy(id);
+        System.out.println(person);
+        return person;
     }
 
     /**
-     * Find a person by its email. If no person is available, an empty {@link Optional} is returned.
+     * Find an entity by its email.
      *
-     * @param email Email of the searched entity
-     * @return The person or empty
+     * @param email Email of the person
+     * @return The found entity
      */
-    public Optional<Person> findByEmail(String email) {
-        return personRepository.findByEmail(email);
+    public Person findByEmail( final String email ) {
+        return personRepository.findByEmail( email );
     }
 
     /**
-     * Find persons by its name. If no person is available, an empty {@link List} is returned.
+     * Find entities by its name.
      *
-     * @param name The name (phrase) of the person.
-     * @return The persons or empty list
+     * @param name The name (phrase) of the persons firstname or lastname or both.
+     * @return The entities or an empty list
      */
-    public List<Person> findByName(String name) {
-        return personRepository.findByName(name);
+    public List<Person> findByName( final String name ) {
+        return personRepository.findByName( name );
     }
 
     /**
-     * Find persons by its faculty id. If no person is available, an empty {@link List} is returned.
+     * Find entities by its faculty id.
      *
-     * @param facultyId The faculty id of the persons
-     * @return The persons or empty list
+     * @param id The faculty id of the person.
+     * @return The entities or an empty list
      */
-    public List<Person> findByFaculty(int facultyId) {
-        return personRepository.findByFaculty(facultyId);
+    public List<Person> findByFaculty( final int id ) {
+        return personRepository.findByFaculty( id );
     }
 
     /**
-     * Deletes a person by its id.
+     * Deletes a person by its id and the persons profile picture, if existing.
      *
-     * @param id Id of the person to delete.
+     * @param id ID of the person to delete.
      */
-    public void delete(final int id) {
-        final Optional<Person> toDelete = findBy(id);
+    public void delete( final int id ) {
+        final Person toDelete = findBy(id);
 
-        if (toDelete.isEmpty())
-            return;
+        try {
+            filesBF.delete(FileSystemRepository.FileTypes.IMAGE, imgToName(toDelete.getProfileImage()));
+        } catch (IOException ignored) { }
 
-        personRepository.delete(toDelete.get());
+        personRepository.delete( id );
+    }
+
+    /**
+     * Persists or updates a given profile image. The file will be replaced, if already existing.
+     *
+     * @param image   The image to store/update
+     * @param content The content of the image
+     *
+     * @throws IOException Thrown if an error occurs while writing the file to the file system
+     */
+    public void saveImage(final Image image, byte[] content) throws IOException {
+        final boolean newImage = image.getId() < 1;
+        filesBF.save(FileSystemRepository.FileTypes.IMAGE, imgToName(image), content, newImage);
+    }
+
+    private String imgToName( final Image image ) {
+        return image.getName() + "." + image.getSuffix();
     }
 
 }

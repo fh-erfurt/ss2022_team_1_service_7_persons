@@ -1,111 +1,99 @@
 package de.fherfurt.person.person.entity;
 
-import de.fherfurt.person.core.persistence.Database;
-import de.fherfurt.person.core.persistence.Repository;
-import de.fherfurt.person.core.persistence.errors.NoResultException;
-import de.fherfurt.person.core.persistence.errors.ToManyResultsException;
-
+import de.fherfurt.person.person.entity.core.IPersonDao;
+import de.fherfurt.person.person.entity.core.IPersonRepository;
+import de.fherfurt.person.person.entity.models.Image;
 import de.fherfurt.person.person.entity.models.Person;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.regex.Pattern;
 
-/**
- * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
- * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
- */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PersonRepository implements Repository<Person> {
+public class PersonRepository implements IPersonRepository {
 
-    private final Database database = Database.newInstance();
+    private final IPersonDao personDao;
 
-    public static PersonRepository of() {
-        return new PersonRepository();
+    public PersonRepository( IPersonDao personDao ) {
+        this.personDao = personDao;
     }
 
+
     /**
-     * Save an entity to the underlying storage. It doesn't matter, if the entity is
-     * new or already saved.
-     * In case of update the changes are written too.
+     * Find all persisted entities.
      *
-     * @param entity Instance to save
+     * @return All persisted entities or an empty list
      */
     @Override
-    public void save(final Person entity) {
-        database.save(entity);
+    public List<Person> findAll() {
+        return new ArrayList<>( this.personDao.findAll() );
     }
 
     /**
-     * Find an entity by its id. If no entity is available, an empty
-     * {@link Optional} is returned.
+     * Find an entity by its id.
      *
-     * @param id Id of the searched entity
-     * @return The entity or empty
+     * @param id The id of the searched entity
+     * @return The found entity
      */
     @Override
-    public Optional<Person> findBy(int id) {
-        return database.findBy(Person.class, id);
+    public Person findBy( final long id ) {
+        return this.personDao.findById( id );
     }
 
     /**
-     * Find an entity by its email. If no entity is available, an empty
-     * {@link Optional} is returned.
+     * Find an entity by its email.
      *
-     * @throws NoResultException      If no user with the mail was found.
-     * @throws ToManyResultsException If multiple users was found in the database
-     *                                with the same id.
-     *
-     * @param email Email of the searched entity
-     * @return The entity or empty
+     * @param email Email of the person
+     * @return The found entity
      */
-    public Optional<Person> findByEmail(String email) {
-        List<Person> persons = database.findBy(Person.class, person -> Objects.equals(person.getEmail(), email));
-
-        if (persons.size() > 1) {
-            throw new ToManyResultsException("No unique result found for email [" + email + "]");
-        }
-
-        if (persons.size() == 0) return Optional.empty();
-
-        return Optional.of(persons.get(0));
+    @Override
+    public Person findByEmail( final String email ) {
+        return this.personDao.findByEmail( email );
     }
 
     /**
      * Find entities by its name.
      *
-     * @param name The name (phrase) of the person.
+     * @param name The name (phrase) of the persons firstname or lastname or both.
      * @return The entities or an empty list
      */
-    public List<Person> findByName(String name) {
-        // Create pattern to search for phrase with any characters before or after
-        Pattern namePattern = Pattern.compile("^.*" + name + ".*$");
-
-        // Test pattern for every person and collect if match
-        return database.findBy(Person.class, person -> namePattern.matcher(person.getFirstname() + " " + person.getLastname()).find());
+    @Override
+    public List<Person> findByName( final String name ) {
+        return new ArrayList<>( this.personDao.findByName( name ) );
     }
 
     /**
      * Find entities by its faculty id.
      *
-     * @param facultyId The faculty id of the person.
+     * @param id The faculty id of the person.
      * @return The entities or an empty list
      */
-    public List<Person> findByFaculty(int facultyId) {
-        // Test pattern for every person and collect if match
-        return database.findBy(Person.class, person -> Objects.equals(person.getFacultyId(), facultyId));
+    @Override
+    public List<Person> findByFaculty( final int id ) {
+        return new ArrayList<>( this.personDao.findByFaculty( id ) );
+    }
+
+    /**
+     * Save an entity to the underlying storage. It doesn't matter, if the entity is new or already saved.
+     * In case of update the changes are written too.
+     *
+     * @param person Instance to persist to database
+     */
+    @Override
+    public boolean save( final Person person ) {
+        if ( person.getId() != 0 ) {
+            return personDao.update( person ) != null;
+        }
+
+        return personDao.create( person );
     }
 
     /**
      * Deletes a given entity.
      *
-     * @param entity Instance to delete
+     * @param id ID of the person to delete
      */
     @Override
-    public void delete(Person entity) {
-        database.delete(entity);
+    public boolean delete( final long id ) {
+        return this.personDao.delete( id );
     }
 }

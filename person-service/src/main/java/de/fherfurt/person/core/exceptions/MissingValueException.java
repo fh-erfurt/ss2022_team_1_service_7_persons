@@ -1,6 +1,6 @@
-package de.fherfurt.person.core.errors;
+package de.fherfurt.person.core.exceptions;
 
-import de.fherfurt.person.core.persistence.errors.PersistenceException;
+import de.fherfurt.person.core.persistence.exceptions.PersistenceException;
 import lombok.NoArgsConstructor;
 
 /**

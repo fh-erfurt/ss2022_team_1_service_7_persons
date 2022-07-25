@@ -1,6 +1,6 @@
 package de.fherfurt.person.person.entity;
 
-import de.fherfurt.person.core.errors.MissingValueException;
+import de.fherfurt.person.core.exceptions.MissingValueException;
 import de.fherfurt.person.person.entity.errors.MissingContentException;
 import lombok.NoArgsConstructor;
 

@@ -2,6 +2,7 @@ package de.fherfurt.persons.client.objects;
 
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +18,15 @@ import java.util.Optional;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(setterPrefix = "with")
+@Builder(setterPrefix = "with", toBuilder = true)
+@EqualsAndHashCode( onlyExplicitlyIncluded = true )
 public class PersonDto {
     /**
      * Unique identifier of an already persisted person.
      */
-    private int id;
+    private long id;
+
+    private Long version;
 
     /**
      * The persons salutation.
