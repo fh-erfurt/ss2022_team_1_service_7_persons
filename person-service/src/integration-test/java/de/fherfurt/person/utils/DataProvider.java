@@ -36,7 +36,43 @@ public class DataProvider {
                 .withFacultyId(123)
                 .build();
 
-        personList.addAll(List.of(person1));
+        final PersonDto person2 = PersonDto.builder()
+                .withAccount(AccountDto.builder()
+                        .withEmail("tobias0@symantec.com")
+                        .withPassword("123k12iuj4h18924z12jh4esadasd!*##321ß3")
+                        .withUsername("TobiasKärst69")
+                        .build()
+
+                )
+                .withSalutation("Herr")
+                .withPhone("01575 31124128")
+                .withFax("04613 181241247")
+                .withTitles(List.of())
+                .withPositions(List.of("Studierender"))
+                .withFirstname("Tobias")
+                .withLastname("Kärst")
+                .withFacultyId(420)
+                .build();
+
+        final PersonDto person3 = PersonDto.builder()
+                .withAccount(AccountDto.builder()
+                        .withEmail("tom0@symantec.com")
+                        .withPassword("123k12iuj4h18924z12jh4esadasd!*##321ß3")
+                        .withUsername("TomKärst69")
+                        .build()
+
+                )
+                .withSalutation("Herr")
+                .withPhone("01575 31124128")
+                .withFax("04613 181241247")
+                .withTitles(List.of())
+                .withPositions(List.of("Studierender"))
+                .withFirstname("Tom")
+                .withLastname("Kärst")
+                .withFacultyId(420)
+                .build();
+
+        personList.addAll(List.of(person1, person2, person3));
     }
 
     public PersonDto person(int index) {

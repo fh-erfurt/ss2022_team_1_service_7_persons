@@ -2,26 +2,21 @@ package de.fherfurt.person.person.entity;
 
 import de.fherfurt.person.person.entity.core.IPersonDao;
 import de.fherfurt.person.person.entity.core.IPersonRepository;
-import de.fherfurt.person.person.entity.models.Image;
 import de.fherfurt.person.person.entity.models.Person;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonRepository implements IPersonRepository {
-
-    private final IPersonDao personDao;
-
-    public PersonRepository( IPersonDao personDao ) {
-        this.personDao = personDao;
-    }
-
+/**
+ * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
+ * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
+ */
+public record PersonRepository(IPersonDao personDao) implements IPersonRepository {
 
     /**
-     * Find all persisted entities.
+     * Find all persisted persons.
      *
-     * @return All persisted entities or an empty list
+     * @return All persisted persons or an empty list
      */
     @Override
     public List<Person> findAll() {
@@ -29,10 +24,10 @@ public class PersonRepository implements IPersonRepository {
     }
 
     /**
-     * Find an entity by its id.
+     * Searches for a person by its unique id.
      *
-     * @param id The id of the searched entity
-     * @return The found entity
+     * @param id The id of the searched person
+     * @return The found person or null
      */
     @Override
     public Person findBy( final long id ) {
@@ -40,10 +35,10 @@ public class PersonRepository implements IPersonRepository {
     }
 
     /**
-     * Find an entity by its email.
+     * Find a person by its email.
      *
      * @param email Email of the person
-     * @return The found entity
+     * @return The found person
      */
     @Override
     public Person findByEmail( final String email ) {
@@ -51,10 +46,11 @@ public class PersonRepository implements IPersonRepository {
     }
 
     /**
-     * Find entities by its name.
+     * Find persons by their name. You can provide a Full name, a part of it or whatever you want. The database
+     * gets fetched with pattern matching.
      *
-     * @param name The name (phrase) of the persons firstname or lastname or both.
-     * @return The entities or an empty list
+     * @param name The persons firstname or lastname or both.
+     * @return The persons or an empty list.
      */
     @Override
     public List<Person> findByName( final String name ) {
@@ -62,10 +58,10 @@ public class PersonRepository implements IPersonRepository {
     }
 
     /**
-     * Find entities by its faculty id.
+     * Find persons by its faculty id.
      *
      * @param id The faculty id of the person.
-     * @return The entities or an empty list
+     * @return The persons of the faculty or an empty list if faculty doesn't exist
      */
     @Override
     public List<Person> findByFaculty( final int id ) {
@@ -76,11 +72,11 @@ public class PersonRepository implements IPersonRepository {
      * Save an entity to the underlying storage. It doesn't matter, if the entity is new or already saved.
      * In case of update the changes are written too.
      *
-     * @param person Instance to persist to database
+     * @param person Person to persist / update to the database
      */
     @Override
     public boolean save( final Person person ) {
-        if ( person.getId() != 0 ) {
+        if ( person.getId() != null && findBy( person.getId() ) != null ) {
             return personDao.update( person ) != null;
         }
 
@@ -88,7 +84,7 @@ public class PersonRepository implements IPersonRepository {
     }
 
     /**
-     * Deletes a given entity.
+     * Deletes a person by its unique id.
      *
      * @param id ID of the person to delete
      */

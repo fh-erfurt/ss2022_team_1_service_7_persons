@@ -28,7 +28,7 @@ public class FilesBF {
      * @throws IOException Thrown if something goes wrong while deleting or writing
      */
     public void save( FileSystemRepository.FileTypes type, String fileName, byte[] content, boolean replace ) throws IOException {
-        if ( !replace ) {
+        if ( replace ) {
             fileSystemRepository.delete( type, fileName );
         }
 

@@ -19,7 +19,12 @@ public class ImageDto {
     /**
      * Unique identifier of an already persisted image.
      */
-    private long id;
+    private Long id = 0L;
+
+    /**
+     * The database version.
+     */
+    private Long version;
 
     /**
      * The name of the image file.

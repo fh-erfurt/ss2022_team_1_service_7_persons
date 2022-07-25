@@ -9,6 +9,7 @@ import de.fherfurt.persons.client.objects.ImageDto;
 import de.fherfurt.persons.client.objects.PersonDto;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,11 +113,19 @@ public class PersonResource implements PersonClient {
         personBF.delete(id);
     }
 
+    public void deleteAll() {
+        personBF.deleteAll();
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(PersonDto person) {
         personBF.save(BeanMapper.mapFromDto(person));
+    }
+
+    public void saveProfileImage(final PersonDto person, final byte[] content) throws IOException {
+        personBF.saveProfileImage(BeanMapper.mapFromDto(person), content);
     }
 }

@@ -2,8 +2,11 @@ package de.fherfurt.person.core.mappers;
 
 import de.fherfurt.person.core.containers.Tuple3;
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
+import de.fherfurt.person.person.boundary.AccountMapper;
+import de.fherfurt.person.person.entity.models.Account;
 import de.fherfurt.person.person.entity.models.Person;
 import de.fherfurt.person.person.boundary.PersonMapper;
+import de.fherfurt.persons.client.objects.AccountDto;
 import de.fherfurt.persons.client.objects.PersonDto;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.function.Function;
  * in the MAPPERS list of that class.
  *
  * @author Michael Rhoese <michael.rhoese@fh-erfurt.de>
+ * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 public class BeanMapperUtils {
 
@@ -47,6 +51,11 @@ public class BeanMapperUtils {
                     .withV1(Person.class)
                     .withV2(PersonDto.class)
                     .withV3(PersonMapper.INSTANCE)
+                    .build(),
+            Tuple3.<Class<?>, Class<?>, BeanMapper<?, ?>>builder()
+                    .withV1(Account.class)
+                    .withV2(AccountDto.class)
+                    .withV3(AccountMapper.INSTANCE)
                     .build()
     );
 

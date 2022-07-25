@@ -8,7 +8,6 @@ import de.fherfurt.person.person.entity.core.IPersonRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +30,6 @@ public class PersonBF {
      * @param person Instance to persist to database
      */
     public void save( final Person person ) {
-        System.out.println(person);
         personRepository.save(person);
     }
 
@@ -41,7 +39,7 @@ public class PersonBF {
      * @return All persisted entities or an empty list
      */
     public List<Person> findAll() {
-        return personRepository.findAll();
+        return personRepository.findAll().stream().map(this::withImage).toList();
     }
 
 
@@ -51,10 +49,8 @@ public class PersonBF {
      * @param id The id of the searched entity
      * @return The found entity
      */
-    public Person findBy( final int id ) {
-        Person person = personRepository.findBy(id);
-        System.out.println(person);
-        return person;
+    public Person findBy( final long id ) {
+        return withImage( personRepository.findBy(id) );
     }
 
     /**
@@ -64,7 +60,7 @@ public class PersonBF {
      * @return The found entity
      */
     public Person findByEmail( final String email ) {
-        return personRepository.findByEmail( email );
+        return withImage( personRepository.findByEmail( email ) );
     }
 
     /**
@@ -74,7 +70,7 @@ public class PersonBF {
      * @return The entities or an empty list
      */
     public List<Person> findByName( final String name ) {
-        return personRepository.findByName( name );
+        return personRepository.findByName( name ).stream().map(this::withImage).toList();
     }
 
     /**
@@ -84,7 +80,7 @@ public class PersonBF {
      * @return The entities or an empty list
      */
     public List<Person> findByFaculty( final int id ) {
-        return personRepository.findByFaculty( id );
+        return personRepository.findByFaculty( id ).stream().map(this::withImage).toList();
     }
 
     /**
@@ -92,31 +88,70 @@ public class PersonBF {
      *
      * @param id ID of the person to delete.
      */
-    public void delete( final int id ) {
+    public void delete( final long id ) {
         final Person toDelete = findBy(id);
 
         try {
-            filesBF.delete(FileSystemRepository.FileTypes.IMAGE, imgToName(toDelete.getProfileImage()));
+            if (toDelete.getProfileImage() != null) {
+                filesBF.delete(FileSystemRepository.FileTypes.IMAGE, imgToName(toDelete.getProfileImage()));
+            }
         } catch (IOException ignored) { }
 
         personRepository.delete( id );
+    }
+
+    public void deleteAll() {
+        final List<Person> toDelete = findAll();
+
+        toDelete.forEach( ( person ) -> delete( person.getId() ) );
+    }
+
+    public void saveProfileImage( final Person person, final byte[] content) throws IOException {
+        final Image image = Image.builder()
+                .withContent(content)
+                .withName(person.getId().toString())
+                .withSuffix("jpg")
+                .build();
+
+        saveImage(image);
+
+        person.setProfileImage(image);
+
+        save(person);
     }
 
     /**
      * Persists or updates a given profile image. The file will be replaced, if already existing.
      *
      * @param image   The image to store/update
-     * @param content The content of the image
      *
      * @throws IOException Thrown if an error occurs while writing the file to the file system
      */
-    public void saveImage(final Image image, byte[] content) throws IOException {
-        final boolean newImage = image.getId() < 1;
-        filesBF.save(FileSystemRepository.FileTypes.IMAGE, imgToName(image), content, newImage);
+    public void saveImage(final Image image) throws IOException {
+        filesBF.save(FileSystemRepository.FileTypes.IMAGE, imgToName(image), image.getContent(), true);
+    }
+
+
+    public Image loadImage(final Long imageId) throws IOException {
+        final Optional<byte[]> content = filesBF.findBy(FileSystemRepository.FileTypes.IMAGE, imageId + "jpg");
+
+        return Image.builder()
+                .withName(imageId.toString())
+                .withSuffix("jpg")
+                .withContent(content.orElse(null))
+                .build();
     }
 
     private String imgToName( final Image image ) {
         return image.getName() + "." + image.getSuffix();
+    }
+
+    private Person withImage( Person person ) {
+        try {
+            person.setProfileImage(loadImage(person.getId()));
+        } catch (IOException ignored) { }
+
+        return person;
     }
 
 }

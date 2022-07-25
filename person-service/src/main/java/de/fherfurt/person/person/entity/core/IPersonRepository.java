@@ -10,42 +10,43 @@ import java.util.List;
 public interface IPersonRepository {
 
     /**
-     * Find all persisted entities.
+     * Find all persisted persons.
      *
-     * @return All persisted entities or an empty list
+     * @return All persisted persons or an empty list
      */
     List<Person> findAll();
 
     /**
-     * Find an entity by its id.
+     * Searches for a person by its unique id.
      *
-     * @param id The id of the searched entity
-     * @return The found entity
+     * @param id The id of the searched person
+     * @return The found person or null
      */
     Person findBy( final long id );
 
     /**
-     * Find an entity by its email.
+     * Find a person by its email.
      *
      * @param email Email of the person
-     * @return The found entity
+     * @return The found person
      */
     Person findByEmail( final String email );
 
 
     /**
-     * Find entities by its name.
+     * Find persons by their name. You can provide a Full name, a part of it or whatever you want. The database
+     * gets fetched with pattern matching.
      *
-     * @param name The name (phrase) of the persons firstname or lastname or both.
-     * @return The entities or an empty list
+     * @param name The persons firstname or lastname or both.
+     * @return The persons or an empty list.
      */
     List<Person> findByName( final String name );
 
     /**
-     * Find entities by its faculty id.
+     * Find persons by its faculty id.
      *
      * @param id The faculty id of the person.
-     * @return The entities or an empty list
+     * @return The persons of the faculty or an empty list if faculty doesn't exist
      */
     List<Person> findByFaculty( final int id );
 
@@ -53,14 +54,14 @@ public interface IPersonRepository {
      * Save an entity to the underlying storage. It doesn't matter, if the entity is new or already saved.
      * In case of update the changes are written too.
      *
-     * @param person Instance to persist to database
+     * @param person Person to persist / update to the database
      */
     boolean save( final Person person );
 
     /**
-     * Deletes a given entity.
+     * Deletes a person by its unique id.
      *
-     * @param id Id of the person to delete
+     * @param id ID of the person to delete
      */
     boolean delete( final long id );
 }

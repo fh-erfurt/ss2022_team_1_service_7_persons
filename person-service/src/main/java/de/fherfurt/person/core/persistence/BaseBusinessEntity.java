@@ -27,7 +27,7 @@ public abstract class BaseBusinessEntity implements Serializable
     protected Long id;
 
     @Version
-    protected Long version = null;
+    protected Long version;
 
     @Temporal(TemporalType.TIMESTAMP)
     protected Date created;

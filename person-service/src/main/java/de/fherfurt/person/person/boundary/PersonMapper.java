@@ -24,3 +24,4 @@ import org.mapstruct.factory.Mappers;
 public interface PersonMapper extends BeanMapper<Person, PersonDto> {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 }
+

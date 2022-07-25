@@ -19,7 +19,12 @@ public class AccountDto {
     /**
      * Unique identifier of an already persisted account.
      */
-    private long id;
+    private Long id = 0L;
+
+    /**
+     * The database version.
+     */
+    private Long version;
 
     /**
      * The username of the persons account.

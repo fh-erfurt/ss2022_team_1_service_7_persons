@@ -15,13 +15,14 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(callSuper=true)
 @EqualsAndHashCode( callSuper = true )
+@Builder( setterPrefix = "with", toBuilder = true )
 @Entity
-@Builder( setterPrefix = "with" )
 @Table
 public class Image extends BaseBusinessEntity
 {
     private String name;
     private String suffix;
+    private byte[] content;
 }
