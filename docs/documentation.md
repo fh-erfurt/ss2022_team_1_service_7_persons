@@ -38,9 +38,8 @@ implementiert und sind deswegen an dieser Stelle nicht zu beachten.
 
 ```mermaid
 erDiagram
-    PERSON }o--|{ POSITION : angestellt
     PERSON ||--|| ACCOUNT : besitzt
-    PERSON }o--o{ MODULE : besitzt
+    PERSON }o--o{ MODULE : unterrichtet
     PERSON {
         string salutation
         string firstname
@@ -49,9 +48,6 @@ erDiagram
         string imageUrl
         string fax
         int facultyId
-    }
-    POSITION {
-        string position
     }
     ACCOUNT {
         string username
