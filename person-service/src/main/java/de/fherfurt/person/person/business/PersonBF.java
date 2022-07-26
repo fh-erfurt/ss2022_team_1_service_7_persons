@@ -30,7 +30,7 @@ public class PersonBF {
      * @param person Instance to persist to database
      */
     public void save( final Person person ) {
-        personRepository.save(person);
+        personRepository.save( person );
     }
 
     /**
@@ -42,7 +42,6 @@ public class PersonBF {
         return personRepository.findAll().stream().map(this::withImage).toList();
     }
 
-
     /**
      * Find an entity by its id.
      *
@@ -50,7 +49,7 @@ public class PersonBF {
      * @return The found entity
      */
     public Person findBy( final long id ) {
-        return withImage( personRepository.findBy(id) );
+        return withImage( personRepository.findBy( id ) );
     }
 
     /**
@@ -80,7 +79,7 @@ public class PersonBF {
      * @return The entities or an empty list
      */
     public List<Person> findByFaculty( final int id ) {
-        return personRepository.findByFaculty( id ).stream().map(this::withImage).toList();
+        return personRepository.findByFaculty( id ).stream().map( this::withImage ).toList();
     }
 
     /**
@@ -89,35 +88,42 @@ public class PersonBF {
      * @param id ID of the person to delete.
      */
     public void delete( final long id ) {
-        final Person toDelete = findBy(id);
+        final Person toDelete = findBy( id );
 
         try {
             if (toDelete.getProfileImage() != null) {
-                filesBF.delete(FileSystemRepository.FileTypes.IMAGE, imgToName(toDelete.getProfileImage()));
+                filesBF.delete( FileSystemRepository.FileTypes.IMAGE, imgToName( toDelete.getProfileImage() ) );
             }
-        } catch (IOException ignored) { }
+        } catch ( IOException ignored ) { }
 
         personRepository.delete( id );
     }
 
+    /**
+     * Deletes all persisted persons and their corresponding profile pictures.
+     */
     public void deleteAll() {
-        final List<Person> toDelete = findAll();
-
-        toDelete.forEach( ( person ) -> delete( person.getId() ) );
+        findAll().forEach( ( person ) -> delete( person.getId() ) );
     }
 
-    public void saveProfileImage( final Person person, final byte[] content) throws IOException {
+    /**
+     * Saves the content of the image as byte array to the file system and links it to the provided person.
+     *
+     * @param person    The person to save the profile picture
+     * @param content   The content of the profile picture
+     *
+     * @throws IOException If something goes wrong on file system
+     */
+    public void saveProfileImage( final Person person, final byte[] content ) throws IOException {
         final Image image = Image.builder()
-                .withContent(content)
-                .withName(person.getId().toString())
-                .withSuffix("jpg")
+                .withContent( content )
+                .withName( person.getId().toString() )
+                .withSuffix( "jpg" )
                 .build();
 
-        saveImage(image);
-
-        person.setProfileImage(image);
-
-        save(person);
+        saveImage( image );
+        person.setProfileImage( image );
+        save( person );
     }
 
     /**
@@ -127,18 +133,26 @@ public class PersonBF {
      *
      * @throws IOException Thrown if an error occurs while writing the file to the file system
      */
-    public void saveImage(final Image image) throws IOException {
-        filesBF.save(FileSystemRepository.FileTypes.IMAGE, imgToName(image), image.getContent(), true);
+    public void saveImage( final Image image ) throws IOException {
+        filesBF.save( FileSystemRepository.FileTypes.IMAGE, imgToName( image ), image.getContent(), true );
     }
 
 
-    public Image loadImage(final Long imageId) throws IOException {
-        final Optional<byte[]> content = filesBF.findBy(FileSystemRepository.FileTypes.IMAGE, imageId + "jpg");
+    /**
+     * Reads the image with the provided id from file system a returns it as image.
+     *
+     * @param imageId The id of the image
+     *
+     * @return The found image if exists
+     * @throws IOException Thrown if an error occurs while writing the file to the file system
+     */
+    public Image loadImage( final Long imageId ) throws IOException {
+        final Optional<byte[]> content = filesBF.findBy( FileSystemRepository.FileTypes.IMAGE, imageId + "jpg" );
 
         return Image.builder()
-                .withName(imageId.toString())
-                .withSuffix("jpg")
-                .withContent(content.orElse(null))
+                .withName( imageId.toString() )
+                .withSuffix( "jpg" )
+                .withContent( content.orElse( null ) )
                 .build();
     }
 
@@ -148,8 +162,8 @@ public class PersonBF {
 
     private Person withImage( Person person ) {
         try {
-            person.setProfileImage(loadImage(person.getId()));
-        } catch (IOException ignored) { }
+            person.setProfileImage( loadImage( person.getId() ) );
+        } catch ( IOException ignored ) { }
 
         return person;
     }

@@ -1,8 +1,8 @@
 package de.fherfurt.person.person.boundary;
 
 import de.fherfurt.person.core.mappers.BeanMapper;
-import de.fherfurt.person.person.entity.models.Account;
-import de.fherfurt.persons.client.objects.AccountDto;
+import de.fherfurt.person.person.entity.models.Image;
+import de.fherfurt.persons.client.objects.ImageDto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -10,7 +10,7 @@ import org.mapstruct.control.DeepClone;
 import org.mapstruct.factory.Mappers;
 
 /**
- * Mapper that allows the conversion of {@link Account} to/from {@link AccountDto}.
+ * Mapper that allows the conversion of {@link Image} to/from {@link ImageDto}.
  *
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
@@ -19,6 +19,6 @@ import org.mapstruct.factory.Mappers;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         mappingControl = DeepClone.class
 )
-public interface AccountMapper extends BeanMapper<Account, AccountDto> {
-    AccountMapper INSTANCE = Mappers.getMapper( AccountMapper.class );
+public interface ImageMapper extends BeanMapper<Image, ImageDto> {
+    ImageMapper INSTANCE = Mappers.getMapper( ImageMapper.class );
 }

@@ -14,7 +14,7 @@ public interface Repository<ENTITY extends BaseBusinessEntity> {
      *
      * @param entity Instance to save
      */
-    void save(ENTITY entity);
+    void save( ENTITY entity );
 
     /**
      * Find an entity by its id.
@@ -22,12 +22,12 @@ public interface Repository<ENTITY extends BaseBusinessEntity> {
      * @param id The id of the searched entity
      * @return The found entity
      */
-    ENTITY findBy(long id);
+    ENTITY findBy( long id );
 
     /**
      * Deletes a given entity.
      *
      * @param entity Instance to delete
      */
-    void delete(ENTITY entity);
+    void delete( ENTITY entity );
 }

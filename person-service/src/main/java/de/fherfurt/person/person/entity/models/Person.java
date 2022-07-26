@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper=true)
+@ToString( callSuper = true )
 @EqualsAndHashCode( callSuper = true )
 @Builder( setterPrefix = "with", toBuilder = true )
 @Entity

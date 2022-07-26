@@ -3,10 +3,13 @@ package de.fherfurt.person.core.mappers;
 import de.fherfurt.person.core.containers.Tuple3;
 import de.fherfurt.person.core.persistence.BaseBusinessEntity;
 import de.fherfurt.person.person.boundary.AccountMapper;
+import de.fherfurt.person.person.boundary.ImageMapper;
 import de.fherfurt.person.person.entity.models.Account;
+import de.fherfurt.person.person.entity.models.Image;
 import de.fherfurt.person.person.entity.models.Person;
 import de.fherfurt.person.person.boundary.PersonMapper;
 import de.fherfurt.persons.client.objects.AccountDto;
+import de.fherfurt.persons.client.objects.ImageDto;
 import de.fherfurt.persons.client.objects.PersonDto;
 
 import java.util.List;
@@ -33,14 +36,14 @@ public class BeanMapperUtils {
      * @return Instance of the mapper. Otherwise, an exception will be thrown.
      */
     @SuppressWarnings("unchecked")
-    static <E extends BaseBusinessEntity, D> BeanMapper<E, D> getMapperBy(final Class<?> type, final MapperTargets target) {
-        final Function<Tuple3<Class<?>, Class<?>, ? extends BeanMapper<?, ?>>, Class<?>> typeSupplier = MapperTargets.ENTITY.equals(target) ? Tuple3::getV1 : Tuple3::getV2;
+    static <E extends BaseBusinessEntity, D> BeanMapper<E, D> getMapperBy( final Class<?> type, final MapperTargets target ) {
+        final Function<Tuple3<Class<?>, Class<?>, ? extends BeanMapper<?, ?>>, Class<?>> typeSupplier = MapperTargets.ENTITY.equals( target ) ? Tuple3::getV1 : Tuple3::getV2;
 
         return MAPPERS.stream()
-                .filter(mapper -> Objects.equals(type, typeSupplier.apply(mapper)))
+                .filter( mapper -> Objects.equals( type, typeSupplier.apply( mapper ) ) )
                 .findFirst()
-                .map(mapper -> (BeanMapper<E, D>) mapper.getV3())
-                .orElseThrow(() -> new NullPointerException("Could not find mapper for " + target.name().toLowerCase() + " type '" + type.getSimpleName() + "'."));
+                .map( mapper -> ( BeanMapper<E, D> ) mapper.getV3() )
+                .orElseThrow( () -> new NullPointerException( "Could not find mapper for " + target.name().toLowerCase() + " type '" + type.getSimpleName() + "'.") );
     }
 
     /**
@@ -48,14 +51,19 @@ public class BeanMapperUtils {
      */
     private static final List<Tuple3<Class<?>, Class<?>, ? extends BeanMapper<?, ?>>> MAPPERS = List.of(
             Tuple3.<Class<?>, Class<?>, BeanMapper<?, ?>>builder()
-                    .withV1(Person.class)
-                    .withV2(PersonDto.class)
-                    .withV3(PersonMapper.INSTANCE)
+                    .withV1( Person.class )
+                    .withV2( PersonDto.class )
+                    .withV3( PersonMapper.INSTANCE )
                     .build(),
             Tuple3.<Class<?>, Class<?>, BeanMapper<?, ?>>builder()
-                    .withV1(Account.class)
-                    .withV2(AccountDto.class)
-                    .withV3(AccountMapper.INSTANCE)
+                    .withV1( Account.class )
+                    .withV2( AccountDto.class )
+                    .withV3( AccountMapper.INSTANCE )
+                    .build(),
+            Tuple3.<Class<?>, Class<?>, BeanMapper<?, ?>>builder()
+                    .withV1( Image.class )
+                    .withV2( ImageDto.class )
+                    .withV3( ImageMapper.INSTANCE )
                     .build()
     );
 

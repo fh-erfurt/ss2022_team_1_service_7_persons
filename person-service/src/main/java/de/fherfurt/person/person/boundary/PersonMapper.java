@@ -17,11 +17,11 @@ import org.mapstruct.factory.Mappers;
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
 @Mapper(
-        builder = @Builder(disableBuilder = true),
+        builder = @Builder( disableBuilder = true ),
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         mappingControl = DeepClone.class
 )
 public interface PersonMapper extends BeanMapper<Person, PersonDto> {
-    PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
+    PersonMapper INSTANCE = Mappers.getMapper( PersonMapper.class );
 }
 

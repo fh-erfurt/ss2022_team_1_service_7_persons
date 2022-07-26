@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
-@NoArgsConstructor(staticName = "of")
+@NoArgsConstructor( staticName = "of" )
 public class PersonResource implements PersonClient {
     private final PersonBF personBF = PersonBF.of();
 
@@ -33,7 +33,7 @@ public class PersonResource implements PersonClient {
      * @return The found account with matching user id.
      */
     @Override
-    public Optional<AccountDto> findAccountById(int id) {
+    public Optional<AccountDto> findAccountById( int id ) {
         return Optional.empty();
     }
 
@@ -58,7 +58,6 @@ public class PersonResource implements PersonClient {
     public List<PersonDto> findAll() {
         return personBF.findAll().stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
     }
-
 
     /**
      * {@inheritDoc}

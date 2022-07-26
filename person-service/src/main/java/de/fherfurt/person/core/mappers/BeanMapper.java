@@ -21,7 +21,7 @@ public interface BeanMapper<ENTITY extends BaseBusinessEntity, DTO> {
      * @param entity Entity to map
      * @return Resulting DTO of the mapping
      */
-    DTO toDto(final ENTITY entity);
+    DTO toDto( final ENTITY entity );
 
     /**
      * Maps the given DTO to its underlying entity.
@@ -30,7 +30,7 @@ public interface BeanMapper<ENTITY extends BaseBusinessEntity, DTO> {
      * @return Resulting entity of the DTO
      */
     @InheritInverseConfiguration
-    ENTITY fromDto(final DTO dto);
+    ENTITY fromDto( final DTO dto );
 
     /**
      * Deeply clones the entity.
@@ -38,7 +38,7 @@ public interface BeanMapper<ENTITY extends BaseBusinessEntity, DTO> {
      * @param toClone Entity to clone
      * @return Cloned entity
      */
-    ENTITY clone(ENTITY toClone);
+    ENTITY clone( ENTITY toClone );
 
     /**
      * Deeply clones the DTO.
@@ -46,17 +46,17 @@ public interface BeanMapper<ENTITY extends BaseBusinessEntity, DTO> {
      * @param toClone DTO to clone
      * @return Cloned DTO
      */
-    DTO clone(DTO toClone);
+    DTO clone( DTO toClone );
 
     @Ignore
-    static <ENTITY extends BaseBusinessEntity, DTO> DTO mapToDto(final ENTITY entity) {
-        final BeanMapper<ENTITY, DTO> beanMapper = BeanMapperUtils.getMapperBy(entity.getClass(), MapperTargets.ENTITY);
-        return beanMapper.toDto(entity);
+    static <ENTITY extends BaseBusinessEntity, DTO> DTO mapToDto( final ENTITY entity ) {
+        final BeanMapper<ENTITY, DTO> beanMapper = BeanMapperUtils.getMapperBy( entity.getClass(), MapperTargets.ENTITY );
+        return beanMapper.toDto( entity );
     }
 
     @Ignore
-    static <ENTITY extends BaseBusinessEntity, DTO> ENTITY mapFromDto(final DTO dto) {
-        final BeanMapper<ENTITY, DTO> beanMapper = BeanMapperUtils.getMapperBy(dto.getClass(), MapperTargets.DTO);
-        return beanMapper.fromDto(dto);
+    static <ENTITY extends BaseBusinessEntity, DTO> ENTITY mapFromDto( final DTO dto ) {
+        final BeanMapper<ENTITY, DTO> beanMapper = BeanMapperUtils.getMapperBy( dto.getClass(), MapperTargets.DTO );
+        return beanMapper.fromDto( dto );
     }
 }
