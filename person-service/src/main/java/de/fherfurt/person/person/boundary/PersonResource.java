@@ -2,7 +2,6 @@ package de.fherfurt.person.person.boundary;
 
 import de.fherfurt.person.core.mappers.BeanMapper;
 import de.fherfurt.person.person.business.PersonBF;
-import de.fherfurt.person.person.entity.models.Person;
 import de.fherfurt.persons.client.PersonClient;
 import de.fherfurt.persons.client.objects.AccountDto;
 import de.fherfurt.persons.client.objects.ImageDto;
@@ -25,106 +24,101 @@ import java.util.stream.Collectors;
 public class PersonResource implements PersonClient {
     private final PersonBF personBF = PersonBF.of();
 
-    /**
-     * Takes the id of a {@link PersonDto} and searches for its user account. If the corresponding {@link AccountDto}
-     * is found, it will be returned, otherwise an empty {@link Optional} is returned.
-     *
-     * @param id The ID of the person to find the account for.
-     * @return The found account with matching user id.
-     */
+    /** {@inheritDoc} */
     @Override
-    public Optional<AccountDto> findAccountById( int id ) {
-        return Optional.empty();
+    public Optional<AccountDto> findAccountById( final long id ) {
+        try {
+            return Optional.of( BeanMapper.mapToDto(personBF.findBy( id ).getAccount() ) );
+        } catch ( Exception ignored ) {
+            return Optional.empty();
+        }
     }
 
-    /**
-     * Takes the id of a {@link PersonDto} and loads the related {@link ImageDto} which represents the persons
-     * profile image. This {@link ImageDto} contains the image as byte array. If no related {@link ImageDto} was found,
-     * an empty {@link Optional} is returned.
-     *
-     * @param id The ID of the person to find the account for.
-     * @return The found account with matching user id.
-     */
+    /** {@inheritDoc} */
     @Override
-    public Optional<ImageDto> loadPersonsImage(int id) {
-        return Optional.empty();
+    public Optional<ImageDto> loadPersonsImage( final long id ) {
+        try {
+            return Optional.of( BeanMapper.mapToDto( personBF.loadImage( id ) ) );
+        } catch ( IOException ignored ) {
+            return Optional.empty();
+        }
     }
 
-    /**
-     * Find all persisted entities.
-     *
-     * @return All persisted entities or an empty list
-     */
+    /** {@inheritDoc} */
+    @Override
+    public void saveProfileImage( final PersonDto person, final byte[] content ) {
+        try {
+            personBF.saveProfileImage(BeanMapper.mapFromDto(person), content);
+        } catch ( IOException ignored ) {}
+    }
+
+    /** {@inheritDoc} */
     public List<PersonDto> findAll() {
-        return personBF.findAll().stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
+        return personBF.findAll()
+                .stream()
+                .map(person -> (PersonDto) BeanMapper.mapToDto(person))
+                .collect(Collectors.toList());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public PersonDto findById(final int id) {
-        return BeanMapper.mapToDto(personBF.findBy(id));
+    public Optional<PersonDto> findById( final long id ) {
+        try {
+            return Optional.of( BeanMapper.mapToDto( personBF.findBy( id ) ) );
+        } catch ( Exception ignored ) {
+            return Optional.empty();
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public PersonDto findByEmail(String email) {
-        return BeanMapper.mapToDto(personBF.findByEmail(email));
+    public Optional<PersonDto> findByEmail( String email ) {
+        try {
+            return Optional.of( BeanMapper.mapToDto( personBF.findByEmail( email ) ) );
+        } catch ( Exception ignored ) {
+            return Optional.empty();
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public List<PersonDto> findByFaculty(int facultyId) {
-        return personBF.findByFaculty(facultyId).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
+        return personBF.findByFaculty( facultyId )
+                .stream()
+                .map( person -> ( PersonDto ) BeanMapper.mapToDto( person ) )
+                .collect( Collectors.toList() );
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public List<PersonDto> findByName(String name) {
-        return personBF.findByName(name).stream().map(person -> (PersonDto) BeanMapper.mapToDto(person)).collect(Collectors.toList());
+    public List<PersonDto> findByName( String name ) {
+        return personBF.findByName( name )
+                .stream()
+                .map( person -> ( PersonDto ) BeanMapper.mapToDto( person ) )
+                .collect( Collectors.toList() );
     }
 
-    /**
-     * Takes the semester of a {@link PersonDto} and searches all persons holding
-     * lectures in this semester. If no persons match semester (e.g. wrong input: -1),
-     * an empty {@link List} is returned.
-     *
-     * @param semester The semester to search for matching lecturers.
-     * @return The found persons as list.
-     */
+    /** {@inheritDoc} */
     @Override
-    public List<PersonDto> findBySemester(int semester) {
+    public List<PersonDto> findBySemester( final int semester ) {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
-    public void deleteBy(int id) {
+    public void deleteBy( final long id ) {
         personBF.delete(id);
     }
 
+    /** {@inheritDoc} */
     public void deleteAll() {
         personBF.deleteAll();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void save(PersonDto person) {
         personBF.save(BeanMapper.mapFromDto(person));
     }
 
-    public void saveProfileImage(final PersonDto person, final byte[] content) throws IOException {
-        personBF.saveProfileImage(BeanMapper.mapFromDto(person), content);
-    }
 }

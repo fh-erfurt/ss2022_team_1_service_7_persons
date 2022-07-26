@@ -20,22 +20,38 @@ public interface PersonClient
 {
     /**
      * Takes the id of a {@link PersonDto} and searches for its user account. If the corresponding {@link AccountDto}
-     * is found, it will be returned, otherwise an empty {@link Optional} is returned.
+     * is found, it will be returned.
      *
      * @param id The ID of the person to find the account for.
      * @return The found account with matching user id.
      */
-    Optional<AccountDto> findAccountById( int id );
+    Optional<AccountDto> findAccountById( final long id );
 
     /**
      * Takes the id of a {@link PersonDto} and loads the related {@link ImageDto} which represents the persons
-     * profile image. This {@link ImageDto} contains the image as byte array. If no related {@link ImageDto} was found,
-     * an empty {@link Optional} is returned.
+     * profile image. This {@link ImageDto} contains the image as byte array. If a corresponding image was not
+     * found, an empty is returned.
      *
      * @param id The ID of the person to find the account for.
      * @return The found account with matching user id.
      */
-    Optional<ImageDto> loadPersonsImage( int id );
+    Optional<ImageDto> loadPersonsImage( final long id );
+
+    /**
+     * Takes an instance of a {@link PersonDto} and the image content as byte array. The image gets persisted
+     * and associated with the provided person.
+     *
+     * @param person    The person instance to save profile image
+     * @param content   The content of the image as byte array
+     */
+    void saveProfileImage( final PersonDto person, final byte[] content );
+
+    /**
+     * Searches for all persisted users and returns them.
+     *
+     * @return All persisted users or an empty list
+     */
+    List<PersonDto> findAll();
 
     /**
      * Takes the id of a {@link PersonDto} and searches it. If the corresponding {@link PersonDto}
@@ -44,7 +60,7 @@ public interface PersonClient
      * @param id The ID of the person.
      * @return The found Person or an empty optional.
      */
-    PersonDto findById( int id );
+    Optional<PersonDto> findById( final long id );
 
     /**
      * Takes the email of a {@link PersonDto} and searches it. If the corresponding {@link PersonDto}
@@ -53,7 +69,7 @@ public interface PersonClient
      * @param email The email of the person.
      * @return The found Person or an empty optional.
      */
-    PersonDto findByEmail( String email );
+    Optional<PersonDto> findByEmail( String email );
 
     /**
      * Takes the faculty of a {@link PersonDto} and searches all persons in the
@@ -92,7 +108,12 @@ public interface PersonClient
      *
      * @param id The ID of the person that must be deleted
      */
-    void deleteBy( int id );
+    void deleteBy( final long id );
+
+    /**
+     * Deletes all persisted persons.
+     */
+    void deleteAll();
 
     /**
      * Takes a person instance of a {@link PersonDto} object and

@@ -3,13 +3,13 @@ package de.fherfurt.person.boundary;
 import de.fherfurt.person.person.boundary.PersonResource;
 import de.fherfurt.person.utils.DataProvider;
 import de.fherfurt.person.utils.TestUtils;
+import de.fherfurt.persons.client.objects.AccountDto;
 import de.fherfurt.persons.client.objects.ImageDto;
 import de.fherfurt.persons.client.objects.PersonDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import java.util.List;
 
 public class PersonResourceTest {
@@ -30,7 +30,7 @@ public class PersonResourceTest {
 
         // WHEN
         resource.save( person );
-        final PersonDto found = resource.findByEmail( person.getAccount().getEmail() );
+        final PersonDto found = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
 
         // THEN
         Assertions.assertThat( found ).isEqualTo( person );
@@ -43,7 +43,7 @@ public class PersonResourceTest {
 
         // WHEN
         resource.save( person );
-        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
 
         // THEN
         Assertions.assertThat( savedPerson ).isNotNull();
@@ -55,9 +55,10 @@ public class PersonResourceTest {
 
         // WHEN
         resource.save( updatedPerson );
-        final PersonDto found = resource.findByEmail( updatedPerson.getAccount().getEmail() );
+        final PersonDto found = resource.findByEmail( updatedPerson.getAccount().getEmail() ).orElse( null );
 
         // THEN
+        assert found != null;
         Assertions.assertThat( found.getLastname() ).isEqualTo( "Mustermann" );
     }
 
@@ -68,11 +69,56 @@ public class PersonResourceTest {
 
         // WHEN
         resource.save( person );
-        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
 
         // THEN
         Assertions.assertThat( savedPerson ).isNotNull();
         Assertions.assertThat( resource.findAll().size() ).isEqualTo( 1 );
+    }
+
+    @Test
+    void itShouldFindPersonById() {
+        // GIVEN
+        final PersonDto person = DataProvider.of().person( 1 );
+
+        // WHEN
+        resource.save( person );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
+        assert savedPerson != null;
+        final PersonDto foundPerson = resource.findById( savedPerson.getId() ).orElse( null );
+
+        Assertions.assertThat( foundPerson ).isNotNull();
+        Assertions.assertThat( foundPerson.getAccount().getEmail() ).isEqualTo(person.getAccount().getEmail());
+    }
+
+    @Test
+    void itShouldDeletePersonById() {
+        // GIVEN
+        final PersonDto person = DataProvider.of().person( 1 );
+
+        // WHEN
+        resource.save( person );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
+        assert savedPerson != null;
+        resource.deleteBy( savedPerson.getId() );
+
+        // THEN
+        Assertions.assertThat( resource.findAll().size() ).isEqualTo( 0 );
+    }
+
+    @Test
+    void itShouldFindPersonsAccountById() {
+        // GIVEN
+        final PersonDto person = DataProvider.of().person( 1 );
+
+        // WHEN
+        resource.save( person );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
+        assert savedPerson != null;
+        final AccountDto foundAccount = resource.findAccountById( savedPerson.getId() ).orElse( null );
+
+        Assertions.assertThat( foundAccount ).isNotNull();
+        Assertions.assertThat( foundAccount.getEmail() ).isEqualTo(person.getAccount().getEmail());
     }
 
     @Test
@@ -87,6 +133,22 @@ public class PersonResourceTest {
 
         // THEN
         Assertions.assertThat( resource.findAll() ).isEqualTo( List.of( person1, person2 ) );
+    }
+
+    @Test
+    void itShouldFindAllPersonsBySemester() {
+        // GIVEN
+        final PersonDto person1 = DataProvider.of().person( 1 );
+        final PersonDto person2 = DataProvider.of().person( 2 );
+        final PersonDto person3 = DataProvider.of().person( 3 );
+
+        // WHEN
+        resource.save( person1 );
+        resource.save( person2 );
+        resource.save( person3 );
+
+        // THEN
+        Assertions.assertThat( resource.findBySemester(2) ).isEqualTo( List.of( person1, person3 ) );
     }
 
     @Test
@@ -120,21 +182,39 @@ public class PersonResourceTest {
     }
 
     @Test
-    void itShouldSaveLoadProfilePicture() throws IOException {
+    void itShouldSaveLoadProfilePicture() {
         // GIVEN
         final PersonDto person = DataProvider.of().person( 1 );
 
         // WHEN
         resource.save( person );
-        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
         resource.saveProfileImage( savedPerson, content );
-        final PersonDto updatedPerson = resource.findByEmail( person.getAccount().getEmail() );
+        final PersonDto updatedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
 
         // THEN
+        assert updatedPerson != null;
         Assertions.assertThat( updatedPerson.getProfileImage() ).isEqualTo( ImageDto.builder()
                         .withContent( content )
                         .withName( updatedPerson.getId().toString() )
                         .withSuffix( "jpg" )
                         .build() );
+    }
+
+    @Test
+    void itShouldManuallyLoadProfilePicture() {
+        // GIVEN
+        final PersonDto person = DataProvider.of().person( 1 );
+
+        // WHEN
+        resource.save( person );
+        final PersonDto savedPerson = resource.findByEmail( person.getAccount().getEmail() ).orElse( null );
+        resource.saveProfileImage( savedPerson, content );
+        assert savedPerson != null;
+        final ImageDto foundImage = resource.loadPersonsImage( savedPerson.getId() ).orElse( null );
+
+        // THEN
+        assert foundImage != null;
+        Assertions.assertThat(foundImage.getName()).isEqualTo(savedPerson.getId().toString());
     }
 }
