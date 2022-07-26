@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(staticName = "of")
 public class PersonBF {
 
-    private final IPersonRepository personRepository = DataController.getInstance().getPersonRepository();
+    private final IPersonRepository personRepository = DataController.getPersonRepository();
     private final FilesBF filesBF = FilesBF.of();
 
     /**

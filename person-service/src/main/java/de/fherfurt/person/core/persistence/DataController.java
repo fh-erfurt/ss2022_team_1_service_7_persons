@@ -21,7 +21,6 @@ public class DataController
 
     private final EntityManagerFactory entityManagerFactory;
 
-    @Getter
     private final PersonRepository personRepository;
 
     public static DataController getInstance() {
@@ -29,14 +28,16 @@ public class DataController
         return instance;
     }
 
+    public static PersonRepository getPersonRepository() {
+        return getInstance().personRepository;
+    }
+
     private DataController() {
         this.entityManagerFactory = Persistence.createEntityManagerFactory( PERSISTENCE_UNIT_NAME );
         this.personRepository = new PersonRepository( getPersonDao() );
     }
 
-
-    public IPersonDao getPersonDao()
-    {
+    public IPersonDao getPersonDao() {
         return new PersonDao( this.entityManagerFactory.createEntityManager() );
     }
 

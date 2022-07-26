@@ -3,6 +3,8 @@ package de.fherfurt.person.person.entity;
 import de.fherfurt.person.person.entity.core.IPersonDao;
 import de.fherfurt.person.person.entity.core.IPersonRepository;
 import de.fherfurt.person.person.entity.models.Person;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,18 @@ import java.util.List;
  * @author Jonas Liehmann <jonas.liehmann@fh-erfurt.de>
  * @author Tobias Kärst <tobias.kaerst@fh-erfurt.de>
  */
-public record PersonRepository(IPersonDao personDao) implements IPersonRepository {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class PersonRepository implements IPersonRepository {
+
+    public static PersonRepository of() {
+        return new PersonRepository();
+    }
+
+    private IPersonDao personDao;
+
+    public PersonRepository(IPersonDao personDao) {
+        this.personDao = personDao;
+    }
 
     /**
      * Find all persisted persons.
