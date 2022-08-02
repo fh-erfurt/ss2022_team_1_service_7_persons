@@ -9,7 +9,7 @@ public interface IGenericDao<T extends BaseBusinessEntity>
      *
      * @return All persisted entities or an empty collection
      */
-    Collection<T> findAll();
+    Collection<T> findAll( String sortBy, String orderBy );
 
     /**
      * Searches for an entity by its unique id.

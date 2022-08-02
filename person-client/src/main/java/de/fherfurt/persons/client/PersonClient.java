@@ -51,7 +51,7 @@ public interface PersonClient
      *
      * @return All persisted users or an empty list
      */
-    List<PersonDto> findAll();
+    List<PersonDto> findAll( String sortBy, String orderBy );
 
     /**
      * Takes the id of a {@link PersonDto} and searches it. If the corresponding {@link PersonDto}

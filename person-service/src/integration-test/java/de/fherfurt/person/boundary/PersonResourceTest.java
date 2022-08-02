@@ -1,6 +1,7 @@
 package de.fherfurt.person.boundary;
 
 import de.fherfurt.person.person.boundary.PersonResource;
+
 import de.fherfurt.person.utils.DataProvider;
 import de.fherfurt.person.utils.TestUtils;
 import de.fherfurt.persons.client.objects.AccountDto;
@@ -57,6 +58,8 @@ public class PersonResourceTest {
         resource.save( updatedPerson );
         final PersonDto found = resource.findByEmail( updatedPerson.getAccount().getEmail() ).orElse( null );
 
+        System.out.println(found);
+
         // THEN
         assert found != null;
         Assertions.assertThat( found.getLastname() ).isEqualTo( "Mustermann" );
@@ -73,7 +76,7 @@ public class PersonResourceTest {
 
         // THEN
         Assertions.assertThat( savedPerson ).isNotNull();
-        Assertions.assertThat( resource.findAll().size() ).isEqualTo( 1 );
+        Assertions.assertThat( resource.findAll( "", "" ).size() ).isEqualTo( 1 );
     }
 
     @Test
@@ -103,7 +106,7 @@ public class PersonResourceTest {
         resource.deleteBy( savedPerson.getId() );
 
         // THEN
-        Assertions.assertThat( resource.findAll().size() ).isEqualTo( 0 );
+        Assertions.assertThat( resource.findAll( "", "" ).size() ).isEqualTo( 0 );
     }
 
     @Test
@@ -132,7 +135,7 @@ public class PersonResourceTest {
         resource.save( person2 );
 
         // THEN
-        Assertions.assertThat( resource.findAll() ).isEqualTo( List.of( person1, person2 ) );
+        Assertions.assertThat( resource.findAll( "", "" ) ).isEqualTo( List.of( person1, person2 ) );
     }
 
     @Test

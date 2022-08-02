@@ -32,8 +32,8 @@ public class PersonRepository implements IPersonRepository {
      * @return All persisted persons or an empty list
      */
     @Override
-    public List<Person> findAll() {
-        return new ArrayList<>( this.personDao.findAll() );
+    public List<Person> findAll( String sortBy, String orderBy ) {
+        return new ArrayList<>( this.personDao.findAll( sortBy, orderBy ) );
     }
 
     /**

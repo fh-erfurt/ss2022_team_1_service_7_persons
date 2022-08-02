@@ -40,4 +40,10 @@ public class ImageDto {
      * The image represented as byte array.
      */
     private byte[] content;
+
+    public void merge(ImageDto newImage) {
+        this.name = newImage.getName() != null ? newImage.getName() : this.name;
+        this.suffix = newImage.getSuffix() != null ? newImage.getSuffix() : this.suffix;
+        this.content = newImage.getContent() != null ? newImage.getContent() : this.content;
+    }
 }

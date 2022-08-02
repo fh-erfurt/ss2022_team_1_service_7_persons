@@ -53,8 +53,8 @@ public class PersonResource implements PersonClient {
     }
 
     /** {@inheritDoc} */
-    public List<PersonDto> findAll() {
-        return personBF.findAll()
+    public List<PersonDto> findAll( String sortBy, String orderBy ) {
+        return personBF.findAll( sortBy, orderBy )
                 .stream()
                 .map(person -> (PersonDto) BeanMapper.mapToDto(person))
                 .collect(Collectors.toList());

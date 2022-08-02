@@ -14,7 +14,7 @@ public interface IPersonRepository {
      *
      * @return All persisted persons or an empty list
      */
-    List<Person> findAll();
+    List<Person> findAll( String sortBy, String orderBy );
 
     /**
      * Searches for a person by its unique id.

@@ -46,9 +46,12 @@ public class GenericDao<T extends BaseBusinessEntity> implements IGenericDao<T>
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<T> findAll() {
+    public Collection<T> findAll( String sortBy, String orderBy ) {
+        sortBy = sortBy.equals("") ? "id" : sortBy;
+        orderBy = orderBy.equals("") ? "ASC" : orderBy;
+
         return (Collection<T>) getEntityManager()
-                .createQuery("SELECT e FROM " + getEntityClass().getCanonicalName() + " e" )
+                .createQuery("SELECT e FROM " + getEntityClass().getCanonicalName() + " e ORDER BY e." + sortBy + " " + orderBy )
                 .getResultList();
     }
 

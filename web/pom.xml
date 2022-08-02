@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>persons</artifactId>
+        <groupId>de.fherfurt</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>web</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+
+    <dependencies>
+        <!-- Internal modules dependencies -->
+        <dependency>
+            <groupId>de.fherfurt</groupId>
+            <artifactId>person-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.fherfurt</groupId>
+            <artifactId>person-service</artifactId>
+        </dependency>
+
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+
+        <!-- Jetty -->
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-jetty-http</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!-- Jersey DI and core-->
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!-- Jetty 11 needs Servlet API 5 -->
+        <!-- java.lang.NoClassDefFoundError: jakarta/servlet/ServletInputStream -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- add jackson to support json -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+
+        <!-- Need this to hide warning for jakarta.activation.DataSource -->
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+
+
+    </dependencies>
+
+</project>

@@ -38,8 +38,8 @@ public class PersonBF {
      *
      * @return All persisted entities or an empty list
      */
-    public List<Person> findAll() {
-        return personRepository.findAll().stream().map(this::withImage).toList();
+    public List<Person> findAll( String sortBy, String orderBy ) {
+        return personRepository.findAll( sortBy, orderBy ).stream().map(this::withImage).toList();
     }
 
     /**
@@ -103,7 +103,7 @@ public class PersonBF {
      * Deletes all persisted persons and their corresponding profile pictures.
      */
     public void deleteAll() {
-        findAll().forEach( ( person ) -> delete( person.getId() ) );
+        findAll( "", "" ).forEach( ( person ) -> delete( person.getId() ) );
     }
 
     /**
