@@ -46,4 +46,15 @@ public class ImageDto {
         this.suffix = newImage.getSuffix() != null ? newImage.getSuffix() : this.suffix;
         this.content = newImage.getContent() != null ? newImage.getContent() : this.content;
     }
+
+    /**
+     * Checks if image has all needed attributes.
+     */
+    public boolean isValidToCreate() {
+        return (
+            this.getContent() != null && (this.getContent().length != 0) &&
+            this.getSuffix() != null && !this.getSuffix().isEmpty() &&
+            this.getName() != null && !this.getName().isEmpty()
+        );
+    }
 }
