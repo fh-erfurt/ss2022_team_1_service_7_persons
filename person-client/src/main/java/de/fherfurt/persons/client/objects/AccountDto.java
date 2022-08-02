@@ -40,4 +40,20 @@ public class AccountDto {
      * The hashed password of the persons account.
      */
     private String password;
+
+    /**
+     * Checks if account has all needed attributes.
+     */
+    public boolean isValidToCreate() {
+        return (
+            this.email != null &&
+            this.username != null
+        );
+    }
+
+    public void merge(AccountDto newAccount) {
+        this.email = newAccount.getEmail() != null ? newAccount.getEmail() : this.email;
+        this.username = newAccount.getUsername() != null ? newAccount.getUsername() : this.username;
+        this.password = newAccount.getPassword() != null ? newAccount.getPassword() : this.password;
+    }
 }

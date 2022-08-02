@@ -80,4 +80,27 @@ public class PersonDto {
      * The persons profile image (can be null).
      */
     private ImageDto profileImage;
+
+    public boolean isValidToCreate() {
+        return (
+            this.getFirstname() != null &&
+            this.getLastname() != null &&
+            this.getFacultyId() != 0 &&
+            this.getAccount().isValidToCreate()
+        );
+    }
+
+    public void merge(PersonDto newPerson) {
+        this.salutation = newPerson.getSalutation() != null ? newPerson.getSalutation() : this.salutation;
+        this.firstname = newPerson.getFirstname() != null ? newPerson.getFirstname() : this.firstname;
+        this.lastname = newPerson.getLastname() != null ? newPerson.getLastname() : this.lastname;
+        this.phone = newPerson.getPhone() != null ? newPerson.getPhone() : this.phone;
+        this.fax = newPerson.getFax() != null ? newPerson.getFax() : this.fax;
+        this.facultyId = newPerson.getFacultyId() != 0 ? newPerson.getFacultyId() : this.facultyId;
+        this.titles = newPerson.getTitles() != null ? newPerson.getTitles() : this.titles;
+        this.positions = newPerson.getPositions() != null ? newPerson.getPositions() : this.positions;
+
+        if (newPerson.getAccount() != null) this.getAccount().merge(newPerson.getAccount());
+        if (newPerson.getProfileImage() != null) this.getProfileImage().merge(newPerson.getProfileImage());
+    }
 }
