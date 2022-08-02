@@ -9,12 +9,12 @@
 
   <name>person</name>
   <packaging>pom</packaging>
-  <url>https://github.com/fh-erfurt/ws2021_team_1_service_7_persons</url>
+  <url>https://github.com/fh-erfurt/ss2022_team_1_service_7_persons</url>
 
   <modules>
     <module>person-client</module>
     <module>person-service</module>
-      <module>web</module>
+    <module>web</module>
   </modules>
 
   <properties>
