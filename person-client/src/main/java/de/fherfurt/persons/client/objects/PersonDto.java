@@ -81,6 +81,9 @@ public class PersonDto {
      */
     private ImageDto profileImage;
 
+    /**
+     * Checks if person has all needed attributes.
+     */
     public boolean isValidToCreate() {
         return (
             this.getFirstname() != null &&
