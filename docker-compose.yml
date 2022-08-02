@@ -1,0 +1,43 @@
+# Docker Compose File Version - see https://docs.docker.com/compose/compose-file/compose-versioning/
+version: '3'
+
+volumes:
+  db-data:
+
+services:
+  # Postgres container
+#  app_db:
+#    image: postgres:latest
+#
+#    # Storage folder for DB data - using the volume defined above
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#
+#    # Your specified configuration - should be the same in your 'persistence.xml'
+#    environment:
+#      - POSTGRES_DB=addressbook_db
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=password
+#      - PGDATA=/var/lib/postgresql/data/pgdata
+#
+#    # Port Mapping to Host
+#    # Allows for direct database access (e.g. from your IDE)
+#    ports:
+#      - 5432:5432
+
+  # Your Web App Container
+  webapp:
+    # Will use the Dockerfile in current directory to build and run your app
+    build: .
+
+    environment:
+      - RUN_MODE=production
+
+    # Port Mapping
+    ports:
+      - 8080:8080
+
+    # Needs 'app_db' service above
+    depends_on:
+      - app_db
+
