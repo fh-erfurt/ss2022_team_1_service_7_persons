@@ -2,6 +2,7 @@ package de.fheerfurt.person.resources;
 
 import de.fheerfurt.person.utils.ListUtils;
 import de.fherfurt.person.person.boundary.PersonResource;
+import de.fherfurt.persons.client.objects.ImageDto;
 import de.fherfurt.persons.client.objects.PersonDto;
 import jakarta.ws.rs.*;
 
@@ -18,6 +19,18 @@ public class PersonWebResource {
         this.personResource = PersonResource.of();
     }
 
+    /**
+     * Returns a list of persons which are sorted, filtered and spliced according to the given parameters.
+     *
+     * @param facultyId type int as query param
+     * @param semester type int as query param
+     * @param query type String as query param
+     * @param skip type int as query param
+     * @param take type int as query param
+     * @param sortBy type String as query param
+     * @param orderBy type String as query param
+     * @return List of persons
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPersons(
@@ -90,6 +103,12 @@ public class PersonWebResource {
     }
 
 
+    /**
+     * Receives a person id, returns the person object of the given person id from the database.
+     *
+     * @param personId type long as path param
+     * @return Requested person object on success, HTTP Status Code 400 on bad params
+     */
     @GET
     @Path("/{person_id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -103,6 +122,12 @@ public class PersonWebResource {
         return Response.ok(foundPerson.get()).build();
     }
 
+    /**
+     * Receives a new person object which will be saved to the database.
+     *
+     * @param personToCreate type PersonDto
+     * @return HTTP Status Code 200 on success, 400 on bad params
+     */
     @POST
     public Response createPerson(PersonDto personToCreate) {
         if (personToCreate.isValidToCreate()) {
@@ -112,6 +137,13 @@ public class PersonWebResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
+    /**
+     * Receives a person id and a new person object, updates the person of the id with the new person object.
+     *
+     * @param personId type long as path param
+     * @param newPerson type PersonDto
+     * @return HTTP Status Code 200 on success, 400 on bad params
+     */
     @PUT
     @Path("/{person_id}")
     public Response updatePerson(
@@ -130,6 +162,41 @@ public class PersonWebResource {
         return Response.status(Response.Status.OK).build();
     }
 
+    /**
+     * Receives a new profile picture and saves it to the given person id.
+     *
+     * @param personId type long as path param
+     * @param newImage type ImageDto
+     * @return HTTP Status Code 200 on success, 400 on bad params
+     */
+    @PUT
+    @Path("/{person_id}/profile-image")
+    public Response updatePersonPicture(
+            @PathParam("person_id") @DefaultValue( "-1" ) long personId,
+            ImageDto newImage
+    ) {
+        Optional<PersonDto> oFoundPerson = this.personResource.findById(personId);
+
+        if (oFoundPerson.isEmpty() || !newImage.isValidToCreate()) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        // create new Person, add image to it
+        PersonDto newPerson = new PersonDto();
+        newPerson.setProfileImage(newImage);
+
+        PersonDto foundPerson = oFoundPerson.get();
+        foundPerson.merge(newPerson);
+        this.personResource.save(foundPerson);
+        return Response.status(Response.Status.OK).build();
+    }
+
+    /**
+     * Receives a person id deletes the person in the database according to it.
+     *
+     * @param personId type long, as path param
+     * @return HTTP Status Code 200 on success, 400 on bad params
+     */
     @DELETE
     @Path("/{person_id}")
     public Response deletePerson(
