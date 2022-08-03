@@ -1,34 +1,30 @@
-FROM maven:3.8.5-openjdk-17-slim as build
-WORKDIR /workspace/app
-#COPY . .
-# Copy POM
-# modules
+FROM maven:latest as DEPS
+WORKDIR /opt/app
 COPY person-client/pom.xml person-client/pom.xml
 COPY person-service/pom.xml person-service/pom.xml
 COPY web/pom.xml web/pom.xml
-# main
 COPY pom.xml .
 
-
-# get all the downloads out of the way
-RUN mvn org.apache.maven.plugins:maven-dependency-plugin:go-offline
+RUN mvn dependency:go-offline
 
 
-# all modules
-COPY person-client/src person-client/src
-COPY person-service/src person-service/src
-COPY web/src web/src
+FROM maven:latest as BUILDER
+WORKDIR /opt/app
+COPY --from=deps /root/.m2 /root/.m2
+COPY --from=deps /opt/app/ /opt/app
+COPY person-client/src /opt/app/person-client/src
+COPY person-service/src /opt/app/person-service/src
+COPY web/src /opt/app/web/src
 
-WORKDIR WORKDIR /workspace/app/web
-RUN mvn package -DskipTests
+RUN mvn -B -e -o clean install -DskipTests=true
 
 
-FROM openjdk:11.0.15-jre-buster
-ARG DEPENDENCY=/workspace/app/web/target
+FROM eclipse-temurin:17-alpine
+ARG DEPENDENCY=/opt/app/web/target
+WORKDIR /opt/app
 
-WORKDIR /app
-COPY --from=build ${DEPENDENCY}/lib ./lib
-COPY --from=build ${DEPENDENCY}/jab-server.jar .
+COPY --from=BUILDER ${DEPENDENCY}/lib ./lib
+COPY --from=BUILDER ${DEPENDENCY}/jab-server.jar .
 
 EXPOSE 8080
 

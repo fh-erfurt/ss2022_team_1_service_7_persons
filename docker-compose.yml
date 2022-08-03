@@ -35,7 +35,7 @@ services:
 
     # Port Mapping
     ports:
-      - 8080:8080
+      - "8080:8080"
 
     # Needs 'app_db' service above
     depends_on:
