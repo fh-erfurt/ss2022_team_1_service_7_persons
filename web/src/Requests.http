@@ -1,0 +1,54 @@
+
+### Get Greeting from Server
+GET http://localhost:8080/api/
+Accept: text/plain
+
+### Create Person
+POST http://localhost:8080/api/persons
+Content-Type: application/json
+
+{
+  "firstname": "Gerd",
+  "lastname": "Faunch",
+  "salutation": "Frau",
+  "phone": "01575 31834128",
+  "fax": "04613 18231247",
+  "titles": ["Dr", "Prof"],
+  "positions": ["Dozentin"],
+  "facultyId": 42,
+  "account": {
+    "username": "CorissaFaunch42",
+    "email": "cfaunch0@symantec.com",
+    "password": "1234"
+  }
+}
+
+### Get all persons
+GET http://localhost:8080/api/persons
+Accept: application/json
+
+### Get Person with ID 1
+GET http://localhost:8080/api/persons/1
+Accept: application/json
+
+### Update Person with ID 1, update firstName
+PUT http://localhost:8080/api/persons/1
+Content-Type: application/json
+
+{
+  "firstname": "Friedrich"
+}
+
+### Update Person with ID 1, update profile image
+PUT http://localhost:8080/api/persons/1/profile-image
+Content-Type: application/json
+
+{
+  "name": "newImage",
+  "suffix": ".png",
+  "content": []
+}
+
+### Delete Person with ID 1
+DELETE http://localhost:8080/api/persons/1
+
