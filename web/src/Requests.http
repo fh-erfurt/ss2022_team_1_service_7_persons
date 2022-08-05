@@ -40,15 +40,10 @@ Content-Type: application/json
 }
 
 ### Update Person with ID 1, update profile image
-PUT http://localhost:8080/api/persons/1/profile-image
-Content-Type: application/json
+# needs file, cant provide file in example
+PUT http://localhost:8080/api/persons/1/profile-image?suffix=png&name=profile-picture
+Content-Type: application/octet-stream
 
-{
-  "name": "newImage",
-  "suffix": ".png",
-  "content": []
-}
 
 ### Delete Person with ID 1
 DELETE http://localhost:8080/api/persons/1
-
