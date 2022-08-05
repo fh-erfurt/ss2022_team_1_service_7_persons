@@ -38,6 +38,6 @@ services:
       - "8080:8080"
 
     # Needs 'app_db' service above
-    depends_on:
-      - app_db
+#    depends_on:
+#      - app_db
 
