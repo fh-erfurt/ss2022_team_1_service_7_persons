@@ -8,7 +8,11 @@ import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.commons.io.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -165,29 +169,50 @@ public class PersonWebResource {
     /**
      * Receives a new profile picture and saves it to the given person id.
      *
-     * @param personId type long as path param
-     * @param newImage type ImageDto
+     * @param personId id of the person to alter
+     * @param fileSuffix file suffix
+     * @param fileName optional filename
+     * @param fileStream the profile file itself
      * @return HTTP Status Code 200 on success, 400 on bad params
+     * @throws IOException when toByteArray encounters an error
      */
+
     @PUT
     @Path("/{person_id}/profile-image")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     public Response updatePersonPicture(
-            @PathParam("person_id") @DefaultValue( "-1" ) long personId,
-            ImageDto newImage
-    ) {
+        @PathParam("person_id") @DefaultValue( "-1" ) long personId,
+        @QueryParam("suffix") @DefaultValue("") String fileSuffix,
+        @QueryParam("name") @DefaultValue("profile-picture") String fileName,
+        InputStream fileStream
+    ) throws IOException {
         Optional<PersonDto> oFoundPerson = this.personResource.findById(personId);
 
-        if (oFoundPerson.isEmpty() || !newImage.isValidToCreate()) {
+        if (oFoundPerson.isEmpty() || fileSuffix == null || fileStream.hashCode() == 0) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+
+        // extract bytes from file stream
+        byte[] fileContent;
+        fileContent = IOUtils.toByteArray(fileStream);
+        fileStream.close();
+
+        // create new image, set attributes
+        ImageDto newImage = new ImageDto();
+        newImage.setName(fileName);
+        newImage.setSuffix(fileSuffix);
+        newImage.setContent(fileContent);
 
         // create new Person, add image to it
         PersonDto newPerson = new PersonDto();
         newPerson.setProfileImage(newImage);
 
+        // set created Person to person from database
         PersonDto foundPerson = oFoundPerson.get();
         foundPerson.merge(newPerson);
+
         this.personResource.save(foundPerson);
+
         return Response.status(Response.Status.OK).build();
     }
 
