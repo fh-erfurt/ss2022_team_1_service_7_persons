@@ -60,3 +60,167 @@ erDiagram
         int semester
     }
 ```
+
+# 3 Structure
+## Folder
+![img.png](https://i.imgur.com/mzIcdj7.png)
+### `person-client`
+Person class logic
+### `person-service`
+Database logic and creation
+### `web`
+The Webserver with routes
+
+## Person Data Transfer Object Class
+```Java
+class person {
+    private Long id = 0L;
+    private Long version;
+    private String salutation;
+    private String firstname;
+    private String lastname;
+    private String phone;
+    private String fax;
+    private int facultyId;
+    private List<String> titles;
+    private List<String> positions;
+    private AccountDto account;
+    private ImageDto profileImage;
+}
+```
+## Account Data Transfer Object Class
+```Java
+class account {    
+    private Long id = 0L;
+    private Long version;
+    private String username;
+    private String email;
+    private String password;
+}
+```
+## Image Data Transfer Object Class
+```Java
+class Image {
+    private Long id = 0L;
+    private Long version;
+    private String name;
+    private String suffix;
+    private byte[] content;
+}
+```
+
+
+# 4 HTTP Requests
+
+### A complete person
+```json
+{
+  "id": 4,
+  "salutation": "Frau",
+  "firstname": "Gerd",
+  "lastname": "Faunch",
+  "phone": "01575 31834128",
+  "fax": "04613 18231247",
+  "facultyId": 42,
+  "titles": [
+    "Dr",
+    "Prof"
+  ],
+  "positions": [
+    "Dozentin"
+  ],
+  "account": {
+    "id": 5,
+    "version": 0,
+    "username": "CorissaFaunch42",
+    "email": "cfaunch0@symantec.com",
+    "password": "1234"
+  },
+  "profileImage": {
+    "id": null,
+    "version": null,
+    "name": "4",
+    "suffix": "jpg",
+    "content": null
+  }
+}
+```
+
+## Get greeting from server
+```http
+GET http://localhost:8080/api/
+Accept: text/plain
+```
+## Create a person
+```http
+POST http://localhost:8080/api/persons
+Content-Type: application/json
+```
+### Example
+```json
+{
+  "firstname": "Gerd",
+  "lastname": "Faunch",
+  "salutation": "Frau",
+  "phone": "01575 31834128",
+  "fax": "04613 18231247",
+  "titles": ["Dr", "Prof"],
+  "positions": ["Dozentin"],
+  "facultyId": 42,
+  "account": {
+    "username": "CorissaFaunch42",
+    "email": "cfaunch0@symantec.com",
+    "password": "1234"
+  }
+}
+```
+## Get all persons
+```http
+GET http://localhost:8080/api/persons
+Accept: application/json
+```
+
+## Get person by id
+```http
+GET http://localhost:8080/api/persons/:personId
+Accept: application/json
+```
+### Example
+```
+http://localhost:8080/api/persons/1
+```
+
+## Update person
+```http
+PUT http://localhost:8080/api/persons/:personId
+Content-Type: application/json
+```
+### Example
+```
+http://localhost:8080/api/persons/1
+
+{
+  "firstname": "Friedrich"
+}
+```
+## Update profile image
+```http
+PUT http://localhost:8080/api/persons/1/profile-image?suffix=:filesuffix&name=:filename
+Content-Type: application/octet-stream
+```
+### Example
+needs file to upload
+```bash
+# queries
+?suffix=png
+&name=mypicture
+```
+
+## Delete person
+```http
+DELETE http://localhost:8080/api/persons/:personId
+```
+### Example
+```
+DELETE http://localhost:8080/api/persons/1
+```
