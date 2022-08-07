@@ -54,6 +54,10 @@ This repository is maintained by the following students:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+# Documentation
+`in /docs/documentation.md`
+
+
 # Contributing
 
 This repository was created for educational purposes only so no contributions are required.
